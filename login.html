@@ -1,0 +1,191 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Jalwa Game Login
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   .font-jalwa {
+      font-family: 'Orbitron', sans-serif;
+    }
+    .hh{
+        padding-bottom: 140px;
+    }
+  </style>
+ </head>
+ <body class="bg-[#fff] min-h-screen  flex flex-col">
+    <div class="bg-[#0a0a2a] max-w-md mx-auto hh w-full">
+  <!-- Header -->
+  <header class="flex items-center justify-between bg-[#07072a] px-4 py-3 ">
+   <button aria-label="Back" class="text-white text-2xl">
+    <i class="fas fa-arrow-left" onclick="window.location.href='index.html'">
+    </i>
+   </button>
+   <h1 class=" text-white text-3xl select-none" style="letter-spacing: -0.03em">
+    A2Z.
+    <span class="font-normal text-[18px]">
+    Game
+    </span>
+   </h1>
+   <div class="flex items-center space-x-2">
+    <img alt="United States flag icon" class="w-8 h-8 rounded-full" height="32" src="https://storage.googleapis.com/a1aa/image/8fdae174-0d9d-4867-5100-5cc5f4d15330.jpg" width="32"/>
+    <span class="text-[#00d8c0] font-semibold text-lg select-none">
+     EN
+    </span>
+   </div>
+  </header>
+  <!-- Info box -->
+  <section class="bg-[#071a44] px-5 py-2">
+   <h2 class="text-white  mb-2 select-none">
+    Log in
+   </h2>
+   <p class="text-white text-base leading-5 select-none">
+    Please log in with your phone number or email
+    <br/>
+    If you forget your password, please contact customer service
+   </p>
+  </section>
+  <!-- Tabs -->
+  <nav class="flex justify-center mt-4 border-b border-[#2a3a6a]">
+   <button aria-current="page" class="flex items-center space-x-2 border-b-2 border-[#00d8c0] pb-2 px-6 text-[#00d8c0] font-bold text-lg select-none" type="button" id="phone">
+    <i class="fas fa-mobile-alt text-[#00d8c0] text-xl" >
+    </i>
+    <span>
+     phone number
+    </span>
+   </button>
+   <button class="flex items-center space-x-2 border-b-2 border-transparent pb-2 px-6 text-[#7a84b0] font-semibold text-lg select-none" type="button">
+    <i class="fas fa-envelope text-[#7a84b0] text-xl" id="gmail">
+    </i>
+    <span>
+     Email Login
+    </span>
+   </button>
+  </nav>
+  <!-- Form Phone-->
+  <form class="px-5 mt-6 space-y-3" id="phonebox" >
+   <!-- Phone number label -->
+   <label class="flex items-center space-x-2 text-white text-lg font-medium select-none" for="phone">
+    <i class="fas fa-mobile-alt text-[#00d8c0] text-2xl">
+    </i>
+    <span>
+     Phone number
+    </span>
+   </label>
+   <!-- Phone input group -->
+   <div class="flex space-x-3">
+    <select aria-label="Country code" class="bg-[#071a44] rounded-xl px-6 py-3 text-[#7a84b0] text-lg font-semibold cursor-pointer focus:outline-none" id="country-code" name="country-code">
+     <option selected="" value="+91">
+      +91
+     </option>
+     <option value="+1">
+      +1
+     </option>
+     <option value="+44">
+      +44
+     </option>
+     <option value="+61">
+      +61
+     </option>
+    </select>
+    <input aria-label="Phone number input" class="flex-grow bg-[#071a44] rounded-xl px-1 py-3 text-[#7a84b0]  placeholder-[#7a84b0] focus:outline-none" id="phone" name="phone" placeholder="Please enter the phone number" type="tel"/>
+   </div>
+   <!-- Password label -->
+   <label class="flex items-center space-x-2 text-white text-lg font-medium select-none" for="password">
+    <i class="fas fa-lock text-[#00d8c0] text-2xl">
+    </i>
+    <span>
+     Password
+    </span>
+   </label>
+   <!-- Password input with eye icon -->
+   <div class="relative">
+    <input aria-label="Password input" class="w-full bg-[#071a44] rounded-xl px-6 py-3 text-[#7a84b0] placeholder-[#7a84b0] focus:outline-none pr-12" id="password" name="password" placeholder="Password" type="password"/>
+    <button aria-label="Toggle password visibility" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#7a84b0] text-xl" tabindex="-1" type="button">
+     <i class="fas fa-eye-slash">
+     </i>
+    </button>
+   </div>
+   <!-- Remember password -->
+   <div class="flex items-center space-x-2">
+    <input class="w-5 h-5 border border-white rounded-full text-[#00d8c0] focus:ring-0 focus:ring-offset-0" id="remember" name="remember" type="checkbox"/>
+    <label class="text-[#7a84b0] text-base select-none" for="remember">
+     Remember password
+    </label>
+   </div>
+   <!-- Log in button -->
+   <button class="w-full bg-[#49516a] rounded-full py-3 text-[#7a84b0] select-none" type="submit">
+    Log in
+   </button>
+   <!-- Register button -->
+   <button class="w-full border border-[#00d8c0] rounded-full py-3 text-[#00d8c0]  select-none" type="button" onclick="window.location.href='Register.html'">
+    Register
+   </button>
+  </form>
+   <!-- Form Gmail-->
+  <form class="px-5 mt-6 space-y-6 flex-grow" id="gmailbox" style="display: none;">
+   <!-- Mail label -->
+   <label class="flex items-center space-x-2 text-white text-lg font-semibold select-none">
+    <i class="fas fa-envelope text-[#00E6C0] text-xl">
+    </i>
+    <span>
+     Mail
+    </span>
+   </label>
+   <input class="w-full bg-[#07153F] rounded-xl py-3 px-4 text-[#6B7AA6] placeholder-[#6B7AA6] text-lg focus:outline-none" placeholder="please input your email" required="" type="email"/>
+   <!-- Password label -->
+   <label class="flex items-center space-x-2 text-white text-lg font-semibold select-none">
+    <i class="fas fa-lock text-[#00E6C0] text-xl">
+    </i>
+    <span>
+     Password
+    </span>
+   </label>
+   <div class="relative">
+    <input class="w-full bg-[#07153F] rounded-xl py-3 px-4 text-[#6B7AA6] placeholder-[#6B7AA6] text-lg focus:outline-none pr-10" placeholder="Password" required="" type="password"/>
+    <i aria-hidden="true" class="fas fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-[#6B7AA6] text-lg cursor-pointer">
+    </i>
+   </div>
+   <!-- Remember password -->
+   <label class="flex items-center space-x-3 text-white text-base select-none">
+    <span class="w-6 h-6 rounded-full bg-[#00E6C0] flex items-center justify-center">
+     <i class="fas fa-check text-white text-sm">
+     </i>
+    </span>
+    <span>
+     Remember password
+    </span>
+   </label>
+   <!-- Log in button -->
+   <button class="w-full bg-[#4B5673] rounded-full py-4 text-[#6B7AA6] font-semibold text-xl tracking-widest select-none" type="submit">
+    Log in
+   </button>
+   <!-- Register button -->
+   <button class="w-full border border-[#00E6C0] rounded-full py-4 text-[#00E6C0] font-semibold text-xl tracking-widest select-none" type="button">
+    Register
+   </button>
+  </form>
+  <!-- Footer links -->
+  <footer class="flex justify-around  text-white select-none">
+   <div class="flex flex-col items-center space-y-2 mt-10">
+    <i class="fas fa-lock text-[#00d8c0] text-4xl">
+    </i>
+    <span class="text-base">
+     Forgot password
+    </span>
+   </div>
+   <div class="flex flex-col items-center space-y-2 mt-10">
+    <img alt="" class="w-10 h-10" height="40" src="icon_customer.png" width="40"/>
+    <span class="text-base">
+     Customer Service
+    </span>
+   </div>
+  </footer>
+  </div>
+ </body>
+</html>

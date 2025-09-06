@@ -1,0 +1,923 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>
+    Jalwa Game
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .icon-box {
+      position: relative;
+      top: 8px;
+    }
+
+    .icon-main {
+      font-size: 10px;
+      position: relative;
+      top: -13px;
+      right: 23px;
+    }
+
+    .icon-main1 {
+      position: relative;
+      right: 80px;
+      top: 5px;
+    }
+
+    .icon-bg {
+      background-image: url(icon_bg.webp);
+      background-size: cover;
+      height: 70px;
+      margin-bottom: 17px;
+
+    }
+
+    .icon-bg1 {
+      background-image: url(fishing/icon_bg-bulu.webp);
+      background-size: cover;
+      height: 70px;
+      margin-bottom: 17px;
+
+    }
+
+    .today {
+      position: absolute;
+      left: 160px;
+      top: 20px;
+    }
+
+    .today-t1 {
+      position: relative;
+      top: 65px;
+      left: 80px;
+    }
+
+    .today1 {
+      position: absolute;
+      left: 50px;
+      top: 40px;
+    }
+
+    .today-t2 {
+      position: relative;
+      top: 75px;
+    }
+
+    .bg-last {
+      background-image: url(bg-last.webp);
+      background-size: cover;
+
+    }
+
+    .items-img {
+      position: relative;
+      left: 16px;
+      top: 15px;
+    }
+
+    .items-img1 {
+      position: relative;
+      top: 30px;
+      left: 30px;
+    }
+
+    .items-img2 {
+      position: relative;
+
+      top: 20px;
+    }
+
+    .pp {
+      position: relative;
+      right: 25px;
+      top: -18px;
+    }
+
+    .hh {
+      padding-bottom: 60px;
+    }
+  </style>
+</head>
+
+<body class="bg-[#fff] text-white min-h-screen flex flex-col">
+  <div class="bg-[#0a0a2a] max-w-md mx-auto hh w-full">
+    <div class=" flex flex-col px-4 pt-4 ">
+      <!-- Header -->
+      <header class="flex justify-between items-center mb-4">
+        <div class="flex items-center space-x-1">
+          <h1 class="text-xl font-extrabold text-[#00FF9F]">
+            A2Z
+          </h1>
+          <span class="text-white font-semibold text-sm">
+            Game
+          </span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            class="flex items-center space-x-1 text-white text-sm font-semibold bg-[#0B0B2B] border border-[#00FF9F] rounded px-2 py-1">
+
+            <span onclick="window.location.href='login.html'">
+              Login
+            </span>
+          </button>
+          <button
+            class="flex items-center space-x-1 text-white text-sm font-semibold bg-[#0B0B2B] border border-[#00FF9F] rounded px-2 py-1">
+
+            <span onclick="window.location.href='Register.html'">
+              Register
+            </span>
+          </button>
+        </div>
+      </header>
+      <!-- Top Buttons -->
+      <div class="flex space-x-3 mb-4">
+        <button class="flex-1   justify-center space-x-2">
+          <img alt="Wheel of fortune icon, colorful wheel with segments" class="w-full h-auto" height="24"
+            src="/images/home1.svg" width="100%" />
+
+        </button>
+        <button class="flex-1   justify-center space-x-2">
+          <img alt="VIP privileges icon, gift box with stars and sparkles" class="w-full h-auto" height="24"
+            src="/images/home2.svg" width="100%" />
+
+        </button>
+      </div>
+      <!-- Referral Bonus Banner -->
+      <div class="relative rounded-lg overflow-hidden mb-4"
+        style="background: linear-gradient(90deg, #0B0B2B 0%, #0B0B2B 100%)">
+        <img alt="Referral bonus banner with 4 people holding coins and a phone, blue background with coins floating"
+          class="w-full h-auto " height="140" src="/images/Banner9.jpg" width="400" />
+
+      </div>
+      <!-- Customer Service Info -->
+      <div class="flex items-center justify-between bg-[#0B0B2B] border border-[#00FF9F] rounded-lg px-3 py-2 mb-4">
+        <div class="flex items-center space-x-2 text-xs text-[#00FF9F]">
+          <i class="fas fa-volume-up">
+          </i>
+          <span>
+            Our customer service will never send a
+            <br />
+            any links to members – if you receive a li
+          </span>
+        </div>
+        <button class="bg-[#00FF9F] text-[#0B0B2B] text-xs font-semibold rounded px-3 py-1">
+          Detail
+        </button>
+      </div>
+      <!-- Wallet Balance and Buttons -->
+      <div class="flex items-center justify-between bg-[#0B0B2B] border border-[#00FF9F] rounded-lg px-3 py-2 mb-4">
+        <div class="flex  space-x-2 text-sm text-white ">
+          <i class="fas fa-wallet text-[#00FF9F] icon-box">
+          </i>
+          <span class="icon-main">
+            Wallet balance
+
+          </span>
+
+          <span class="text-[#00FF9F] font-semibold icon-main1">
+            ₹1000
+          </span>
+        </div>
+        <div class="flex space-x-2">
+          <button
+            class="bg-gradient-to-r from-[#FF7F00] to-[#FF3B00] text-white text-xs font-semibold rounded px-4 py-1">
+            Withdraw
+          </button>
+          <button
+            class="bg-gradient-to-r from-[#FF3B00] to-[#FF0000] text-white text-xs font-semibold rounded px-4 py-1">
+            Deposit
+          </button>
+        </div>
+      </div>
+      <!-- Game Icons Grid -->
+      <div class="grid grid-cols-4 gap-3 mb-6  ">
+        <div class="flex flex-col items-center space-y-1 icon-bg" id="icon">
+          <img id="Lottery" alt="Lottery icon, colorful lottery ball with number 8" class="w-full h-auto" height="48"
+            src="/images/lotari.png" width="40" />
+          <span class="text-xs text-white font-semibold">
+            Lottery
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-2 icon-bg1" id="icon1">
+          <img id="Mini" alt="Mini games icon, colorful game controller" class="w-full h-auto" height="48"
+            src="/images/mini.png" width="40" />
+          <span class="text-xs text-white font-semibold">
+            Mini games
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 icon-bg1" id="icon2">
+          <img id="Hot" alt="Hot slots icon, slot machine with flames" class="w-full h-auto" height="48" src="/images/hot.png"
+            width="40" />
+          <span class="text-xs text-white font-semibold">
+            Hot Slots
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 icon-bg1" id="icon3">
+          <img id="Slots" alt="Slots icon, slot machine with cherries" class="w-full h-auto" height="48" src="/images/solot.png"
+            width="40" />
+          <span class="text-xs text-white font-semibold">
+            Slots
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 icon-bg1" id="icon4">
+          <img id="Fishing" alt="Fishing icon, fishing rod with fish" class="w-full h-auto" height="40" src="/images/fres.png"
+            width="40" />
+          <span class="text-xs text-white font-semibold">
+            Fishing
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 icon-bg1" id="icon5">
+          <img id="PVC" alt="PVC icon, colorful PVC pipe" class="w-full h-auto" height="40" src="/images/pvc.png" width="40" />
+          <span class="text-xs text-white font-semibold">
+            PVC
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 icon-bg1" id="icon6">
+          <img id="Casino" alt="Casino icon, casino chips and cards" class="w-full h-auto" height="40" src="/images/casi.png"
+            width="40" />
+          <span class="text-xs text-white font-semibold">
+            Casino
+          </span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 icon-bg1" id="icon7">
+          <img id="Sports" alt="Sports icon, sports ball and bat" class="w-full h-auto" height="40" src="/images/sport.png"
+            width="40" />
+          <span class="text-xs text-white font-semibold">
+            Sports
+          </span>
+        </div>
+      </div>
+      <!-- Lottery Section -->
+      <section class="main-win" id="box">
+        <h1 class="flex items-center text-white font-extrabold text-lg mb-3 gap-2">
+          <i class="fas fa-gamepad">
+          </i>
+          Lottery
+
+        </h1>
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div class="rounded-lg flex justify-center items-center">
+            <img src="/images/lotterymin1.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-lg  flex justify-center items-center">
+
+            <img alt="Motorcycle racing icon, cartoon motorcycle with rider" src="/images/motor.png" class="w-full h-auto" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-lg  flex justify-center items-center">
+
+            <img alt="Motorcycle racing icon, cartoon motorcycle with rider" src="/images/lotteryk3.png"
+              class="w-full h-auto" />
+          </div>
+
+          <div class="rounded-lg  flex justify-center items-center">
+
+            <img alt="Motorcycle racing icon, cartoon motorcycle with rider" src="/images/lottery5d.png"
+              class="w-full h-auto" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2  mt-4">
+          <div class="rounded-lg  flex justify-center items-center">
+
+            <img alt="Motorcycle racing icon, cartoon motorcycle with rider" src="/images/lotterty.png" class="w-full h-auto" />
+          </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Mini Section -->
+    <main class=" w-full" id="box1" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        Mini games
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/mini/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/mini/baner2.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Cricket bat, ball and helmet on a light green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/mini/baner3.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Yellow airplane flying in blue sky with clouds" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/mini/baner4.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Bomb with diamond on purple background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/mini/baner5.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Playing cards ace of hearts on green table with red curtain background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/mini/baner6.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Boom explosion text on blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/mini/baner7.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="White javelin thrower icon on green background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/mini/baner8.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Rocket ship flying on blue background with stars and sparkles"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/mini/baner9.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="White dragon icon on light blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/mini/baner10.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Green snake with open mouth on dark green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/mini/baner11.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Soccer goal with ball on light blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/mini/baner12.png" width="150" />
+
+        </div>
+      </section>
+    </main>
+    <!-- Hot Section -->
+    <main class=" w-full" id="box2" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        Hot Slots
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/Hot/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/Hot/baner2.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Cricket bat, ball and helmet on a light green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/Hot/baner3.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Yellow airplane flying in blue sky with clouds" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/Hot/baner4.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Bomb with diamond on purple background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/Hot/baner5.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Playing cards ace of hearts on green table with red curtain background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/Hot/baner6.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Boom explosion text on blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/Hot/baner7.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="White javelin thrower icon on green background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/Hot/baner8.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Rocket ship flying on blue background with stars and sparkles"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/Hot/baner9.png" width="150" />
+
+        </div>
+
+      </section>
+    </main>
+    <!-- Slots Section -->
+    <main class=" w-full" id="box3" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        Slots games
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/slots/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/slots/baner2.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Cricket bat, ball and helmet on a light green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/slots/baner3.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Yellow airplane flying in blue sky with clouds" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/slots/baner4.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Bomb with diamond on purple background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/slots/baner5.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Playing cards ace of hearts on green table with red curtain background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/slots/baner6.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Boom explosion text on blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/slots/baner7.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="White javelin thrower icon on green background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/slots/baner8.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Rocket ship flying on blue background with stars and sparkles"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/slots/baner9.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="White dragon icon on light blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="/images/slots/baner10.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Green snake with open mouth on dark green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/slots/baner11.png" width="150" />
+
+      </section>
+    </main>
+
+    <!-- Fishing Section -->
+    <main class=" w-full" id="box4" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        Fishing Slots
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/fishing/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/fishing/baner2.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Cricket bat, ball and helmet on a light green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="/images/fishing/baner3.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Yellow airplane flying in blue sky with clouds" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="fishing/baner4.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Bomb with diamond on purple background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="fishing/baner5.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Playing cards ace of hearts on green table with red curtain background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="fishing/baner6.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Boom explosion text on blue background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="fishing/baner7.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="White javelin thrower icon on green background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="fishing/baner8.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Rocket ship flying on blue background with stars and sparkles"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="fishing/baner9.png" width="150" />
+
+        </div>
+
+      </section>
+    </main>
+    <!-- PVC Section -->
+    <main class=" w-full" id="box5" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        PVC
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="pvc/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="pvc/baner2.png" width="150" />
+
+        </div>
+      </section>
+    </main>
+    <!-- Casino Section -->
+    <main class=" w-full" id="box6" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        Casino
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="casino/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="casino/baner2.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Cricket bat, ball and helmet on a light green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="casino/baner3.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Yellow airplane flying in blue sky with clouds" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="casino/baner4.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Bomb with diamond on purple background" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="casino/baner5.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Playing cards ace of hearts on green table with red curtain background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="casino/baner6.png" width="150" />
+
+        </div>
+
+      </section>
+    </main>
+    <!-- Spoets Section -->
+    <main class=" w-full" id="box7" style="display: none; ">
+      <h1 class="text-white font-semibold text-lg mb-4 flex items-center gap-2 font-serif">
+        <i class="fas fa-gamepad">
+        </i>
+        Sports
+      </h1>
+      <section class="grid grid-cols-3 gap-4 m-2">
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Red background with a red airplane flying with motion blur"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="sports/baner1.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Chicken Road 2 game cover with a chicken and city background in orange red"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="sports/baner2.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Cricket bat, ball and helmet on a light green background"
+            class="w-full h-[180px] object-cover rounded-xl" height="180" src="sports/baner3.png" width="150" />
+
+        </div>
+        <div class="rounded-xl overflow-hidden cursor-pointer">
+          <img alt="Yellow airplane flying in blue sky with clouds" class="w-full h-[180px] object-cover rounded-xl"
+            height="180" src="sports/baner4.png" width="150" />
+
+      </section>
+    </main>
+    <!-- Winning Information -->
+    <section class="mb-6">
+      <h2 class="flex items-center text-white font-extrabold text-lg mb-3 ">
+        <i class="fas fa-info-circle mr-2">
+        </i>
+        Winning information
+      </h2>
+      <div class="bg-[#0B0B2B] border border-[#00FF9F] rounded-lg p-3 space-y-3 max-h-48 overflow-y-auto">
+        <div class="flex items-center space-x-3 opacity-50">
+          <img alt="User avatar with username Mem***HLR" class="w-8 h-8 rounded-full" height="32"
+            src="https://storage.googleapis.com/a1aa/image/3084f02a-8971-4cda-d6d6-6166a6184807.jpg" width="32" />
+          <div class="flex-1 text-xs text-white">
+            <span class="font-semibold">
+              Mem***HLR
+            </span>
+            <br />
+            Winning amount ₹79.40
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 opacity-100">
+          <img alt="User avatar with username Mem***UUV" class="w-8 h-8 rounded-full" height="32"
+            src="https://storage.googleapis.com/a1aa/image/4b1d76fd-2e78-4d2f-441b-01d1c985e033.jpg" width="32" />
+          <div class="flex-1 text-xs text-[#00FF9F]">
+            <span class="font-semibold">
+              Mem***UUV
+            </span>
+            <br />
+            Winning amount ₹585.00
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 opacity-50">
+          <img alt="User avatar with username Mem***WUZ" class="w-8 h-8 rounded-full" height="32"
+            src="https://storage.googleapis.com/a1aa/image/6c54dcc6-f36d-4c5e-4dea-e34dfcb0dc3b.jpg" width="32" />
+          <div class="flex-1 text-xs text-white">
+            <span class="font-semibold">
+              Mem***WUZ
+            </span>
+            <br />
+            Winning amount ₹79.40
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 opacity-50">
+          <img alt="User avatar with username Mem***TJK" class="w-8 h-8 rounded-full" height="32"
+            src="https://storage.googleapis.com/a1aa/image/20ad4380-5c5c-42ff-371e-37895f8de7f1.jpg" width="32" />
+          <div class="flex-1 text-xs text-white">
+            <span class="font-semibold">
+              Mem***TJK
+            </span>
+            <br />
+            Winning amount ₹79.40
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 opacity-50">
+          <img alt="User avatar with username Mem***UUZ" class="w-8 h-8 rounded-full" height="32"
+            src="https://storage.googleapis.com/a1aa/image/d7090b82-46da-4c47-4768-92811195454b.jpg" width="32" />
+          <div class="flex-1 text-xs text-white">
+            <span class="font-semibold">
+              Mem***UUZ
+            </span>
+            <br />
+            Winning amount ₹79.40
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Today's Earnings Chart -->
+    <div class="max-w-md w-full bg-gradient-to-b from-[#051a4a] to-[#0a0f2a] rounded-md p-6">
+      <!-- Top 3 container -->
+      <div class="flex justify-between items-end mb-8 bg-last">
+        <!-- 2nd place -->
+        <div class="relative flex flex-col ">
+          <div class=" relative items-img">
+
+            <img alt="Portrait of a young woman with dark hair, representing second place user"
+              class="w-15 h-15 rounded-full border-4 border-[#a9b9e0] absolute -top-12" height="70"
+              src="https://storage.googleapis.com/a1aa/image/1a7644c9-2c56-4ae1-4eca-b7988642c395.jpg" width="70" />
+
+            <p class="mt-14 text-[#f7f1b6] ftext-lg">
+              Mem***ZIY
+            </p>
+            <p class="text-[#7a8dbf] text-sm mt-1 ">
+              ₹3,391,359.48
+            </p>
+          </div>
+        </div>
+        <!-- 1st place -->
+        <div class="relative flex flex-col items-center">
+          <div class="relative items-img1">
+
+            <img alt="Portrait of a young woman with dark hair, representing first place user"
+              class="w-15 h-15 rounded-full border-4 border-[#f7f1b6] absolute -top-14" height="70"
+              src="https://storage.googleapis.com/a1aa/image/e7862bfc-f830-4772-429c-0c4134f42ee9.jpg" width="70" />
+            <div class="pp">
+              <p class="mt-20 text-[#f7f1b6]  text-xl">
+                Mem***VGL
+              </p>
+              <p class="text-[#f7f1b6]  mt-1 ">
+                ₹17,126,619,88.80
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 3rd place -->
+        <div class="relative flex flex-col items-center w-24 sm:w-28">
+          <div class="relative items-img2">
+
+            <img alt="Portrait of a young woman with dark hair, representing third place user"
+              class="w-15 h-15 rounded-full border-4 border-[#f7a07a] absolute -top-12" height="70"
+              src="https://storage.googleapis.com/a1aa/image/c4dd5baa-3231-4b39-41d6-2367367b7de8.jpg" width="70" />
+
+            <p class="mt-14 text-[#ff7f2a]  ">
+              Mem***XTI
+            </p>
+            <p class="text-[#b75a1f] mt-1">
+              ₹1,964,730.40
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- List 4 to 9 -->
+      <div class="space-y-4">
+        <!-- 4 -->
+        <div class="flex items-center space-x-4 border-b border-[#0a1a3a] pb-4">
+          <span class="text-[#7a8dbf] font-semibold text-lg w-6 select-none">
+            4
+          </span>
+          <img alt="Portrait of a young woman with dark hair, representing user ranked 4" class="w-12 h-12 rounded-full"
+            height="48" src="https://storage.googleapis.com/a1aa/image/eeafbd0f-8f1b-4ccd-4de8-a4178795c3b8.jpg"
+            width="48" />
+          <p class="text-white font-semibold flex-1">
+            Mem***NEU
+          </p>
+          <p class="text-[#00d6b0] font-semibold text-lg">
+            ₹736,960,000.00
+          </p>
+        </div>
+        <!-- 5 -->
+        <div class="flex items-center space-x-4 border-b border-[#0a1a3a] pb-4">
+          <span class="text-[#7a8dbf] font-semibold text-lg w-6 select-none">
+            5
+          </span>
+          <img alt="Portrait of a young woman with dark hair, representing user ranked 5" class="w-12 h-12 rounded-full"
+            height="48" src="https://storage.googleapis.com/a1aa/image/bb6434ab-0ed8-4a88-fec1-b9fae9b09262.jpg"
+            width="48" />
+          <p class="text-white font-semibold flex-1">
+            Mem***337
+          </p>
+          <p class="text-[#00d6b0] font-semibold text-lg">
+            ₹162,288,003.92
+          </p>
+        </div>
+        <!-- 6 -->
+        <div class="flex items-center space-x-4 border-b border-[#0a1a3a] pb-4">
+          <span class="text-[#7a8dbf] font-semibold text-lg w-6 select-none">
+            6
+          </span>
+          <img alt="Portrait of a young woman with dark hair, representing user ranked 6" class="w-12 h-12 rounded-full"
+            height="48" src="https://storage.googleapis.com/a1aa/image/acf67656-5fc8-4b32-0252-62cd64f56a2f.jpg"
+            width="48" />
+          <p class="text-white font-semibold flex-1">
+            Mem***MD5
+          </p>
+          <p class="text-[#00d6b0] font-semibold text-lg">
+            ₹144,875,806.88
+          </p>
+        </div>
+        <!-- 7 -->
+        <div class="flex items-center space-x-4 border-b border-[#0a1a3a] pb-4">
+          <span class="text-[#7a8dbf] font-semibold text-lg w-6 select-none">
+            7
+          </span>
+          <img alt="Portrait of a young woman with dark hair, representing user ranked 7" class="w-12 h-12 rounded-full"
+            height="48" src="https://storage.googleapis.com/a1aa/image/745d7e1f-1c14-4735-c9e9-fe7de654d067.jpg"
+            width="48" />
+          <p class="text-white font-semibold flex-1">
+            Mem***PWF
+          </p>
+          <p class="text-[#00d6b0] font-semibold text-lg">
+            ₹35,510,692.00
+          </p>
+        </div>
+        <!-- 8 -->
+        <div class="flex items-center space-x-4 border-b border-[#0a1a3a] pb-4">
+          <span class="text-[#7a8dbf] font-semibold text-lg w-6 select-none">
+            8
+          </span>
+          <img alt="Portrait of a young woman with dark hair, representing user ranked 8" class="w-12 h-12 rounded-full"
+            height="48" src="https://storage.googleapis.com/a1aa/image/339da52f-e4be-4c7a-1c23-6f2264ff80fb.jpg"
+            width="48" />
+          <p class="text-white font-semibold flex-1">
+            Mem***AMS
+          </p>
+          <p class="text-[#00d6b0] font-semibold text-lg">
+            ₹21,644,466.20
+          </p>
+        </div>
+        <!-- 9 -->
+        <div class="flex items-center space-x-4 pb-4">
+          <span class="text-[#7a8dbf] font-semibold text-lg w-6 select-none">
+            9
+          </span>
+          <img alt="Portrait of a young woman with dark hair, representing user ranked 9" class="w-12 h-12 rounded-full"
+            height="48" src="https://storage.googleapis.com/a1aa/image/1c046058-8184-4847-52a9-f6953d63aa14.jpg"
+            width="48" />
+          <p class="text-white font-semibold flex-1">
+            Mem***TJD
+          </p>
+          <p class="text-[#00d6b0] font-semibold text-lg">
+            ₹20,436,260.46
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Footer Text -->
+    <footer class="text-xs text-[#00FF9F] font-extrabold mb-4 m-2">
+      <span>
+        A2Z
+      </span>
+      <span class="text-white">
+        .Game
+      </span>
+      <span class="ml-1 text-sm rounded-full bg-[#00FF9F] text-[#0B0B2B] px-1">
+        +18
+      </span>
+    </footer>
+    <div class="text-xs text-white space-y-2 mb-6 m-2 ">
+      <p>
+        ● The platform advocates fairness, justice, and openness. We mainly
+        operate fair lottery, blockchain games, live casino, and slot machine
+        games.
+      </p>
+      <p>
+        ● Jalwa works with more than 10,000 online live game dealers and slot
+        games, all of which are verified fair games.
+      </p>
+      <p>
+        ● Jalwa supports fast deposit and withdrawal, and looks forward to your
+        visit.
+      </p>
+      <p>
+        Gambling can be addictive, please play rationally. Jalwa only accepts
+        customers above the age of 18.
+      </p>
+    </div>
+    <!-- Add to Desktop Button -->
+    <button
+      class="mx-auto mb-6 bg-gradient-to-r from-[#00FF9F] to-[#00D9FF] rounded-full px-6 py-2 text-xs font-semibold text-[#0B0B2B] flex items-center space-x-2">
+      <i class="fas fa-desktop ">
+      </i>
+      <span>
+        Add to Desktop
+      </span>
+    </button>
+  </div>
+  <!-- Bottom Navigation -->
+  <nav
+    class="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-[#0B1437] border-t border-[#1A2A5B] flex justify-around items-center py-2 text-xs text-[#7B8DB8] w-full max-w-md">
+    <button class="flex flex-col items-center space-y-1 new " onclick="window.location.href='promotion.html'">
+      <i class="fas fa-heart text-xl"></i>
+      <span>Promotion</span>
+    </button>
+    <button class="flex flex-col items-center space-y-1 new " onclick="window.location.href='Ac.html'">
+      <i class="fas fa-gift text-xl"></i>
+      <span>Activity</span>
+    </button>
+    <button aria-current="page" class="relative flex flex-col items-center space-y-1 ">
+      <div
+        class="absolute -top-6 w-14 h-14 rounded-full bg-gradient-to-b from-[#0B3B3B] to-[#0B1437] flex items-center justify-center">
+        <i class="fas fa-gamepad text-2xl new    text-[#2DE6C9]" onclick="window.location.href='index.html'"></i>
+      </div>
+      <span class="mt-6 font-semibold">Home</span>
+    </button>
+    <button class="flex flex-col items-center space-y-1">
+      <i class="fas fa-wallet text-xl new" onclick="window.location.href='wallet.html'"></i>
+      <span>Wallet</span>
+    </button>
+    <button class="flex flex-col items-center space-y-1  font-semibold  pt-1 new"
+      onclick="window.location.href='account.html'">
+      <i class="fas fa-smile text-xl"></i>
+      <span>Account</span>
+    </button>
+  </nav>
+  </div>
+
+  <script src="/index.js"></script>
+</body>
+
+</html>

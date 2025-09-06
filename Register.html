@@ -1,0 +1,144 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Register
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap");
+  </style>
+  <style>
+    .hh{
+        padding-bottom: 40px;
+    }
+  </style>
+ </head>
+ <body class="bg-[#fff] min-h-screen flex flex-col">
+     <div class="bg-[#0a0a2a] max-w-md mx-auto hh w-full">
+  <!-- Header -->
+  <header class="flex items-center justify-between bg-[#0a0a2a] px-4 py-3">
+   <button aria-label="Back" class="text-white text-2xl">
+    <i class="fas fa-chevron-left " onclick="window.location.href='index.html'">
+    </i>
+   </button>
+   <div class="flex items-center space-x-2">
+    <h1 class="text-white text-2xl ">
+     A2Z
+    </h1>
+    <span class="text-white text-lg font-extrabold" style="font-family: 'Orbitron', sans-serif">
+     .Game
+    </span>
+   </div>
+   <div class="flex items-center space-x-2">
+    <img alt="United States flag icon" class="w-8 h-8 rounded-full" height="32" src="https://storage.googleapis.com/a1aa/image/39f4335f-dc18-42d7-aa84-a2f0755666c7.jpg" width="32"/>
+    <span class="text-[#00d8c0] text-lg font-medium">
+     EN
+    </span>
+   </div>
+  </header>
+  <!-- Info Section -->
+  <section class="bg-[#05163f] px-6 py-4">
+   <h2 class="text-white font-bold text-xl mb-1">
+    Register
+   </h2>
+   <p class="text-white text-base">
+    Please register by phone number or email
+   </p>
+  </section>
+  <!-- Form Section -->
+  <main class="flex-1 px-6 py-6 text-white">
+   <div class="flex flex-col items-center mb-6">
+     <i class="fas fa-mobile-alt text-[#00d8c0] text-xl " >
+    </i>
+    <h3 class="text-[#00d8c0] font-semibold text-lg">
+     Register your phone
+    </h3>
+    <hr class="border-[#00d8c0] border mt-2 w-full max-w-md"/>
+   </div>
+   <form class="max-w-md mx-auto space-y-6">
+    <!-- Phone number -->
+    <div>
+     <label class="flex items-center mb-2 text-white text-base font-normal">
+      <i class="fas fa-mobile-alt text-[#00d8c0] text-xl mr-2" >
+    </i>
+      Phone number
+     </label>
+     <div class="flex space-x-3">
+      <select aria-label="Country code" class="bg-[#0a1a3a] rounded-xl px-5 py-3 text-[#7a8db9] text-lg font-normal cursor-pointer">
+       <option>
+        +91
+       </option>
+      </select>
+      <input class="flex-grow bg-[#0a1a3a] rounded-xl  py-3 text-[#7a8db9]  font-normal placeholder:text-[#7a8db9] pr-3" placeholder="Please enter the phone number" type="tel"/>
+      
+     </div>
+    </div>
+    <!-- Set password -->
+    <div>
+     <label class="flex items-center mb-2 text-white text-base font-normal">
+       <i class="fas fa-lock text-[#00d8c0]  mr-2">
+    </i>
+      Set password
+     </label>
+     <div class="relative">
+      <input class="w-full bg-[#0a1a3a] rounded-xl px-5 py-3 text-[#7a8db9] text-lg font-normal placeholder:text-[#7a8db9] focus:outline-none" placeholder="Set password" type="password"/>
+       <i class="fas fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+     </i>
+     </div>
+    </div>
+    <!-- Confirm password -->
+    <div>
+     <label class="flex items-center mb-2 text-white text-base font-normal">
+         <i class="fas fa-lock text-[#00d8c0]  mr-2">
+    </i>
+      Confirm password
+     </label>
+     <div class="relative">
+      <input class="w-full bg-[#0a1a3a] rounded-xl px-5 py-3 text-[#7a8db9] text-lg font-normal placeholder:text-[#7a8db9] focus:outline-none" placeholder="Confirm password" type="password"/>
+      <i class="fas fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+     </i>
+    </div>
+    </div>
+    <!-- Invite code -->
+    <div>
+     <label class="flex items-center mb-2 text-white text-base font-normal">
+      <img alt="Invite icon in teal color" class="mr-2" height="24" src="icon_feedback.png" width="24"/>
+      Invite code
+     </label>
+     <input class="w-full bg-[#0a1a3a] rounded-xl px-5 py-3 text-[#7a8db9] text-lg font-normal placeholder:text-[#7a8db9] focus:outline-none" placeholder="Please enter the invitation code" type="text"/>
+    </div>
+    <!-- Agreement -->
+    <div class="flex items-center space-x-2">
+     <div class="w-6 h-6 rounded-full bg-[#00d8c0] flex items-center justify-center">
+      <i class="fas fa-check text-white text-sm">
+      </i>
+     </div>
+     <p class="text-white text-base">
+      I have read and agree
+      <span class="text-[#e94a3f] font-semibold">
+       【Privacy Agreement】
+      </span>
+     </p>
+    </div>
+    <!-- Register button -->
+    <button class="w-full bg-gradient-to-r from-[#7ef0d1] to-[#00d8c0] rounded-full py-4 text-[#050523] font-extrabold text-xl tracking-widest" type="submit">
+     Register
+    </button>
+    <!-- Login link -->
+    <button class="w-full border border-[#00d8c0] rounded-full py-3 text-[#7a8db9] text-base tracking-widest flex justify-center items-center space-x-1" type="button">
+     <span>
+      I have an account
+     </span>
+     <span class="text-[#00d8c0] font-extrabold" onclick="window.location.href='login.html'">
+      Login
+     </span>
+    </button>
+   </form>
+  </main>
+  </div>
+ </body>
+</html>
