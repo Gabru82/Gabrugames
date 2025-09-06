@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/mines.css" />
+  <link rel="icon" href="mineimg/minesweeper-icon.webp" type="image/x-icon" />
+
+  <title>Mines</title>
+</head>
+
+<body>
+
+  <div id="toast-notification" style="
+        display: none;
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #222;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        z-index: 9999;
+        font-size: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      "></div>
+
+  <div class="header">
+    <div class="headbox">
+      <img src="mineimg/mineslogo.webp" alt="" width="200px" class="logoimg" />
+
+      <h3 class="text1">
+        <!-- <p style="color:white;">Win: ₹<span id="win-amount-display">0</span></p> -->
+        <button class="menubtn" onclick="toggleNavbarMenu()">
+          <i class="fa fa-bars"></i>
+        </button>
+      </h3>
+    </div>
+    <div id="navbar-menu" class="navbar-menu">
+      <a href="#" id="howplay">How to Play</a>
+      <a href="#">Leaderboard</a>
+      <a href="#">Settings</a>
+      <a href="#">Logout</a>
+    </div>
+  </div>
+  <div class="allgame">
+    <section class="minesection">
+      <div class="minebox1">
+        <button class="minebtn">
+          MINES:3 <i class="fa fa-arrow-down" aria-hidden="true"></i>
+        </button>
+        <h4 class="minetext">NEXT:1.5x</h4>
+      </div>
+
+      <div class="minebox2">
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+        <button class="minestile lasttile">
+          <i class="fa fa-circle gol" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="minesrnd">
+        <button onclick="useRandomTiles = true" class="randombtn" id="randombtn">
+          Random
+        </button>
+        <button id="auto-game-btn" class="autobtn">
+          <i style="font-size: 24px" class="fa">&#xf021;</i>Auto Game
+        </button>
+      </div>
+    </section>
+
+    <footer class="minefoot">
+      <div class="footbox1">
+        <div class="balancebox">
+          <h3>Balance</h3>
+          <span id="total-balance"></span>
+        </div>
+        <div class="betinput">
+          <div class="betbox1">
+            <label class="bettext" for="" style="color: aliceblue">Bet INR</label>
+            <!-- <input type="number" name="" id="" class="mineinput" style="border-radius: 20px;"> -->
+            <input type="number" name="" id="bet-amount" class="mineinput" style="border-radius: 20px" />
+          </div>
+
+          <div class="betbtnbox">
+            <button class="minbtn" id="minbtn">Min</button>
+            <button class="betbtn" id="betplus">
+              <img src="mineimg/Plus.webp" alt="" width="40px" class="plusbtn" />
+            </button>
+            <button class="betbtn" id="coinbtn">
+              <img src="mineimg/Coins.webp" alt="" width="40px" />
+            </button>
+            <span class="bet-box" id="bet-box">
+              <h3>Bet INR</h3>
+              <span class="bet-grid">
+                <button class="bet-btn">10</button>
+                <button class="bet-btn">15</button>
+                <button class="bet-btn active">20</button>
+                <button class="bet-btn">25</button>
+                <button class="bet-btn">30</button>
+                <button class="bet-btn">35</button>
+                <button class="bet-btn">40</button>
+                <button class="bet-btn">45</button>
+                <button class="bet-btn">50</button>
+                <button class="bet-btn">100.00</button>
+                <button class="bet-btn">200.00</button>
+              </span>
+            </span>
+            <button class="betbtn" id="betminus">
+              <img src="mineimg/Minus.webp" alt="" width="40px" />
+            </button>
+            <button class="maxbtn" id="maxbtn">Max</button>
+          </div>
+        </div>
+        <div class="betinput2">
+          <button class="betbtnmid">
+            <img src="mineimg/Play.webp" alt="" width="60px" />
+          </button>
+        </div>
+        <div class="setbox">
+          <div class="mineinputbox">
+            <h4 class="mineselecttext">Select Mines</h4>
+            <button class="minenum">3</button>
+            <button class="minenum">4</button>
+            <span class="minespan">
+              <button class="mineplus">+</button>
+              <input class="mineset" type="number" name="" id="" placeholder="mines" />
+              <button class="mineminus">-</button>
+            </span>
+            <button class="minenum">8</button>
+            <button class="minenum">9</button>
+          </div>
+          <div class="betinput3">
+            <button class="betbtnplay">BET</button>
+            <button class="startbtn" id="startbtn">start</button>
+            <button class="cashout" id="cashout">cash out</button>
+            <button class="stop" id="stop">stop</button>
+            <div id="autowin-popup" style="
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 200px;
+        bottom: 0;
+        width: 50%;
+        /* background: rgba(0, 0, 0, 0.6); */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      ">
+              <div style="
+              display: flex;
+          background: #f8b419;
+          color: white;
+          text-shadow: 1px 1px 3px black;
+          padding: 2px 5px;
+          border-radius: 10px;
+          font-size: 15px;
+        ">
+                <p id="autowin-message" style="margin: 0"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="rules">
+          <button class="btn2 autobutton" id="how-to-play-btn">
+            <img src="mineimg/howto play.webp" alt="" class="auto-img" />
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <div id="game-over-popup" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      ">
+    <div style="
+          background: white;
+          padding: 20px 30px;
+          border-radius: 10px;
+          font-size: 18px;
+        ">
+      <p id="game-over-message" style="margin: 0"></p>
+    </div>
+  </div>
+  <div id="win-popup" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      ">
+    <div style="
+          background: white;
+          padding: 20px 30px;
+          border-radius: 10px;
+          font-size: 18px;
+        ">
+      <p id="win-message" style="margin: 0"></p>
+    </div>
+  </div>
+
+  <!-- how to play popup -->
+  <div id="how-to-play-popup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-btn" id="close-how-to-play">&times;</span>
+      <h2>How to Play</h2>
+      <p>
+        <strong>🎯 Objective:</strong> Click on safe tiles and avoid the
+        mines!
+      </p>
+      <ul>
+        <li>💰 Enter your bet amount (minimum 10 INR)</li>
+        <li>💣 Choose number of mines (minimum 3)</li>
+        <li>🟩 Click tiles to reveal safe spots</li>
+        <li>🤑 Each safe click increases your profit</li>
+        <li>🏃‍♂️ Click "Cash Out" to claim your winnings</li>
+        <li>☠️ If you hit a mine, you lose the bet</li>
+        <li>🔁 Use Auto Game to auto-play with selected tiles</li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="mines.js"></script>
+</body>
+
+</html>
