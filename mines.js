@@ -34,11 +34,14 @@ window.onload = function () {
   let totalTiles = 25;
   let totalMines = 3;
   let autoGameRunning = false;
+  let autoGameActive = false; // track state
+
   let isAutoSelectingTiles = false;
   let selectedAutoTiles = [];
   let winAmount = 0;
-  let useRandomTiles = false;
   let randomAutoMode = false;
+  let randomModeActive = false; // track state
+
   let autoTimeout = null; // To store auto game delay reference
 
   // 🔹 Displayed multipliers (UI)
@@ -93,6 +96,13 @@ window.onload = function () {
     if (isNaN(val) || val < 1) val = 1;
     if (val > 24) val = 24; // adjust max
     totalMines = val;
+    updateMineUI();
+  });
+  // 🔹 Change mine count on mine button click
+  mineBtn.addEventListener("click", () => {
+    totalMines++;
+    playSoundEffect("sound/minesbtn.wav");
+    if (totalMines > 10) totalMines = 3;
     updateMineUI();
   });
 
@@ -203,120 +213,200 @@ window.onload = function () {
     const profit = Math.floor(currentBet * (safeClicks * 0.1 * realMultiplier));
     if (liveWinElement) liveWinElement.textContent = `(₹${profit})`;
   }
-
-  // 🔹 Handles what happens when player hits a mine
-  function gameOver() {
-    gameStarted = false;
-
-    // Only show win amount if all safe tiles were opened (full win)
-    if (winAmount > 0 && safeClicks + totalMines === totalTiles) {
-      updateWallet(balance + winAmount);
-      winAmount = 0;
+  // 🔹 Main bet button logic (starts game or cash out)
+  betButton.addEventListener("click", () => {
+    const bet = parseInt(betInput.value);
+    if (!bet || bet < 10) {
+      showToast("Minimum bet is ₹10");
+      return;
+    }
+    if (bet > balance) {
+      showToast("Not enough balance 💸");
+      return;
     }
 
-    // Show all mine tiles
-    tiles.forEach((tile, index) => {
-      if (mineIndexes.includes(index)) {
-        tile.classList.add("flipping");
-        tile.innerHTML =
-          '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+    currentBet = bet;
+    balance -= currentBet;
+    updateBalance();
+    gameStarted = true;
 
-        // 🔥 Fire on clicked tile, 💣 Bomb on others
-        tile.style.backgroundImage =
-          index === clickedDangerIndex
-            ? "url('mineimg/Fire.webp')"
-            : "url('/mineimg/Bomb.webp')";
+    autoGameBtn.disabled = true;
+    randombtn.disabled = true;
+    disabledbtn();
+    playSoundEffect("sound/tile_click.35cede30.mp3");
 
-        tile.style.backgroundSize = "contain";
-        tile.style.backgroundRepeat = "no-repeat";
-        tile.style.backgroundPosition = "center";
-        tile.style.backgroundColor = "#ff4d4d";
-      }
-      tile.onclick = null;
-    });
+    updateBalance();
+    startManualGame();
+  });
+  startButton.addEventListener("click", () => {
+    const bet = parseInt(betInput.value);
+    if (!bet || bet < 10) {
+      showToast("Minimum bet is ₹10");
+      return;
+    }
+    if (bet > balance) {
+      showToast("Not enough balance 💸");
+      return;
+    }
 
-    gameOverMsg.innerText = "💥 GAME OVER 💥";
-    gameOverPopup.style.display = "flex";
-    cashButton.style.display = "none";
-    betButton.style.display = "inline-block";
+    currentBet = bet;
+    balance -= currentBet;
+    updateBalance();
+    gameStarted = true;
+    isFirstClick = true; // reset for API call
 
-    // Hide popup after short delay
-    setTimeout(() => {
-      gameOverPopup.style.display = "none";
-    }, 1500);
-  }
+    autoGameBtn.disabled = true;
+    randombtn.disabled = true;
+    startButton.style.display = "none";
+    disabledbtn();
+    playSoundEffect("sound/tile_click.35cede30.mp3");
 
-  function checkWinCondition() {
-    const totalSafeTiles = totalTiles - totalMines;
-    if (safeClicks >= totalSafeTiles) {
-      winMessage.innerText = `You cleared all safe tiles 🎉`;
-      winPopup.style.display = "flex";
-
-      balance += currentBet * realMultipliers[totalMines];
-      updateBalance();
-
-      setTimeout(() => {
-        winPopup.style.display = "none";
-        if (autoGameRunning || randomAutoMode) {
-          proceedToNextAutoRound();
-        } else {
-          resetGame();
+    if (isAutoSelectingTiles && selectedAutoTiles.length > 0) {
+      autoGameRunning = true;
+      betButton.style.display = "none";
+      cashButton.style.display = "none";
+      stopButton.style.display = "inline-block";
+      flipAutoTiles();
+      selectedAutoTiles.forEach((index) => {
+        tiles[index].style.outline = "2px solid yellow";
+      });
+    } else if (randomAutoMode) {
+      autoGameRunning = true;
+      betButton.style.display = "none";
+      cashButton.style.display = "none";
+      stopButton.style.display = "inline-block";
+      selectedAutoTiles = [];
+      while (selectedAutoTiles.length < 5) {
+        const randIndex = Math.floor(Math.random() * totalTiles);
+        if (!selectedAutoTiles.includes(randIndex)) {
+          selectedAutoTiles.push(randIndex);
         }
-      }, 2000);
+      }
+      flipAutoTiles();
+    } else {
+      showToast("Please activate Auto or Random mode first.");
     }
-  }
+  });
 
-  // toast popup//
-  function showToast(message) {
-    const toast = document.getElementById("toast-notification");
-    toast.textContent = message;
-    toast.style.display = "block";
-
-    setTimeout(() => {
-      toast.style.display = "none";
-    }, 2500); // 2.5 seconds
-  }
-
-  // 🔹 Reset game to initial state
-  function resetGame() {
-    resetPeriodid();
-    isFirstClick = true; // flag to detect first click
-
-    gameStarted = false;
-    mineIndexes = [];
+  // 🔹 Start manual (click-based) game
+  function startManualGame() {
     safeClicks = 0;
+    mineIndexes = [];
     winAmount = 0;
-    useRandomTiles = false;
+    gameOverPopup.style.display = "none";
+    winPopup.style.display = "none";
 
-    tiles.forEach((tile) => {
+    // Show/Hide buttons
+    betButton.style.display = "none";
+    stopButton.style.display = "none";
+    cashButton.style.display = "block";
+    cashButton.disabled = true;
+
+    // Reset tiles for a new round
+    tiles.forEach((tile, index) => {
       tile.classList.remove("flipping");
       tile.innerHTML = '<i class="fa fa-circle" aria-hidden="true"></i>';
       tile.style.backgroundColor = "";
-      tile.style.backgroundImage = "url('')";
+      tile.style.backgroundImage = "";
 
-      tile.style.outline = "";
-      tile.onclick = null;
+      tile.onclick = () => {
+        if (!gameStarted || tile.classList.contains("flipping")) return;
+        generateMines(); // 🔹 Add this line before looping through tiles
+
+        cashButton.disabled = false; // enable cashout after first click
+        tile.classList.add("flipping");
+
+        if (mineIndexes.includes(index)) {
+          clickedDangerIndex = index; // Store the mine index before calling gameOver
+
+          // ❌ Player clicked on a mine → Game Over
+          tile.innerHTML =
+            '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+          tile.style.backgroundImage = "url('mineimg/Fire.webp')";
+          tile.style.backgroundSize = "contain";
+          tile.style.backgroundRepeat = "no-repeat";
+          tile.style.backgroundPosition = "center";
+          tile.style.backgroundColor = "#fa7273";
+
+          playSoundEffect("sound/bomb.777c9d64.mp3");
+          dangerTileHit = true;
+          revealAllTiles(index); // Pass clicked mine index
+
+          gameOver();
+
+          // Reset after 2 seconds only for manual mode
+          if (!autoGameRunning && !randomAutoMode) {
+            setTimeout(() => {
+              gameOverPopup.style.display = "none";
+              resetGame();
+              allenable();
+            }, 2000);
+          }
+        } else {
+          // ✅ Safe Tile Clicked
+          safeClicks++;
+          playSoundEffect("sound/diamond3.68da1013.mp3");
+          tile.innerHTML =
+            '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+          tile.style.backgroundImage = "url('mineimg/Star.webp')";
+          tile.style.backgroundSize = "contain";
+          tile.style.backgroundRepeat = "no-repeat";
+          tile.style.backgroundPosition = "center";
+          tile.style.backgroundColor = "#f8b419";
+
+          // Update live winnings dynamically
+          updateLiveWin();
+
+          // Check if player cleared all safe tiles
+          checkWinCondition();
+        }
+      };
     });
+
+    gameStarted = true;
+    cashButton.innerHTML = `CASH OUT <span class="live-win">(₹${(0).toFixed(
+      2
+    )})</span>`;
   }
 
   // 🔹 Handle cash out (manual or auto)
-  function cashOut() {
+  cashButton.addEventListener("click", () => {
     const realMultiplier = realMultipliers[totalMines];
-    const profit = Math.floor(currentBet * (safeClicks * 0.1 * realMultiplier));
-    const totalWin = currentBet + profit;
+    const profit = parseFloat(
+      (currentBet * (safeClicks * 0.1 * realMultiplier)).toFixed(2)
+    );
+    const totalWin = parseFloat((currentBet + profit).toFixed(2));
 
+    // ✅ Update balance locally (no API)
     balance += totalWin;
     updateBalance();
 
+    autoGameRunning = false;
+    clearTimeout(autoTimeout);
+
+    randomAutoMode = false;
+    isAutoSelectingTiles = false;
+    useRandomTiles = false;
+
+    // ✅ Show win message
     winMessage.innerText = `You won ₹${profit} 🎉`;
     winPopup.style.display = "flex";
 
+    // ✅ Update buttons
+    cashButton.style.display = "none";
+    betButton.style.display = "inline-block";
+    autoGameBtn.disabled = false;
+    randombtn.disabled = false;
+
+    playSoundEffect("sound/cashout.37dec33e.mp3");
+    Enabledbtn();
+
+    // ✅ Reset after short delay
     setTimeout(() => {
       winPopup.style.display = "none";
-      betButton.innerHTML = "BET";
       resetGame();
     }, 2000);
-  }
+  });
 
   function updateWinAmount() {
     document.getElementById("win-amount").innerText =
@@ -343,103 +433,128 @@ window.onload = function () {
   function flipAutoTiles() {
     let i = 0;
     safeClicks = 0;
-    generateMines();
+    winAmount = 0;
+    dangerTileHit = false;
     gameStarted = true;
 
+    stopButton.innerHTML = `win <span class="live-win">(₹0.00)</span>`;
+
+    currentBet = parseInt(betInput.value);
+    if (balance < currentBet) {
+      autoGameRunning = false;
+      showToast("Not enough balance to continue auto play.");
+      return;
+    }
+
+    // Deduct bet upfront
+    balance -= currentBet;
+    updateBalance();
+
+    generateMines(); // Prepare mines for this round
+
+    // --- Helpers ---
+    function setTileBg(tile, url, color) {
+      tile.style.backgroundImage = `url('${url}')`;
+      tile.style.backgroundColor = color;
+      tile.style.backgroundSize = "contain";
+      tile.style.backgroundRepeat = "no-repeat";
+      tile.style.backgroundPosition = "center";
+    }
+
+    function endRound() {
+      if (dangerTileHit) {
+        console.log("💥 Mine hit - Round ended with loss.");
+      } else {
+        const totalWin = +(currentBet + winAmount).toFixed(2);
+        balance += totalWin;
+        updateBalance();
+
+        // Show Auto Win Popup
+        const popup = document.getElementById("autowin-popup");
+        const msg = document.getElementById("autowin-message");
+        msg.textContent = `You won ₹${totalWin}! 🎉`;
+        popup.style.display = "flex";
+
+        setTimeout(() => {
+          popup.style.display = "none";
+        }, 2000);
+      }
+
+      winAmount = 0;
+
+      if (autoGameRunning) {
+        autoTimeout = setTimeout(() => {
+          resetGame();
+          flipAutoTiles(); // Start next round
+        }, 3000);
+      } else {
+        autoTimeout = setTimeout(() => {
+          betButton.style.display = "inline-block";
+          cashButton.style.display = "none";
+          stopButton.style.display = "none";
+          resetGame();
+        }, 3000);
+      }
+    }
+
+    // --- Per-click auto flip ---
     function flipNextTile() {
-      if (i >= selectedAutoTiles.length || !autoGameRunning) return;
+      if (dangerTileHit || i >= selectedAutoTiles.length) {
+        endRound();
+        return;
+      }
 
       const index = selectedAutoTiles[i];
       const tile = tiles[index];
+      tile.classList.add("flipping");
+      tile.innerHTML =
+        '<i class="fa fa-circle" style="visibility:hidden;"></i>';
 
       if (mineIndexes.includes(index)) {
-        tile.innerHTML = "💣";
-        tile.style.backgroundColor = "#ff4d4d";
-        gameOver();
-
-        // ✅ Wait 2s then auto next or reset manually
-        setTimeout(() => {
-          gameOverPopup.style.display = "none";
-          if (autoGameRunning || randomAutoMode) {
-            proceedToNextAutoRound();
-          } else {
-            resetGame();
-          }
-        }, 2000);
-        return;
+        // Mine hit
+        dangerTileHit = true;
+        playSoundEffect("sound/bomb.777c9d64.mp3");
+        setTileBg(tile, "mineimg/Fire.webp", "#fa7273");
+        stopButton.innerHTML = `win <span class="live-win">(₹0.00)</span>`;
+        revealAllTiles(index); // Pass clicked mine index
+        endRound();
       } else {
-        tile.innerHTML = "⭐";
-        tile.style.backgroundColor = "#00cc99";
-        tile.classList.add("flipped");
+        // Safe tile
         safeClicks++;
-        updateLiveWin();
-        checkWinCondition();
+        playSoundEffect("sound/diamond3.68da1013.mp3");
+        setTileBg(tile, "mineimg/Star.webp", "#f8b419");
 
         winAmount = Math.floor(
           currentBet *
             realMultipliers[totalMines] *
             (safeClicks / selectedAutoTiles.length)
         );
-        betButton.innerHTML = `CASH OUT <span class="live-win">(₹${winAmount})</span>`;
-      }
 
-      i++;
-      setTimeout(flipNextTile, 500);
+        stopButton.innerHTML = `win <span class="live-win">(₹${
+          currentBet + winAmount
+        })</span>`;
+        updateLiveWin();
+
+        i++;
+        setTimeout(flipNextTile, 500);
+      }
     }
 
-    flipNextTile();
-
-    // ✅ Only trigger this if player survives all flips
-    setTimeout(() => {
-      if (
-        autoGameRunning &&
-        gameStarted &&
-        safeClicks === selectedAutoTiles.length
-      ) {
-        balance += winAmount;
-        updateBalance();
-        winAmount = 0;
-        betButton.innerHTML = `CASH OUT <span class="live-win">(₹0)</span>`;
-
-        autoTimeout = setTimeout(() => {
-          resetGame();
-          currentBet = parseInt(betInput.value);
-          if (balance >= currentBet) {
-            balance -= currentBet;
-            updateBalance();
-
-            // 🎲 Randomize tiles if needed
-            if (randomAutoMode) {
-              selectedAutoTiles = [];
-              while (selectedAutoTiles.length < 5) {
-                const randIndex = Math.floor(Math.random() * totalTiles);
-                if (!selectedAutoTiles.includes(randIndex)) {
-                  selectedAutoTiles.push(randIndex);
-                }
-              }
-            }
-
-            flipAutoTiles();
-          } else {
-            autoGameRunning = false;
-            showToast("Not enough balance to continue auto play.");
-          }
-        }, 2000); // 2 second delay between auto rounds
+    // Randomize tiles if random mode is active
+    if (randomAutoMode) {
+      selectedAutoTiles = [];
+      while (selectedAutoTiles.length < 5) {
+        const randIndex = Math.floor(Math.random() * totalTiles);
+        if (!selectedAutoTiles.includes(randIndex)) {
+          selectedAutoTiles.push(randIndex);
+        }
       }
-    }, selectedAutoTiles.length * 500 + 800); // ⏱️ wait for animation to complete
+    }
+
+    flipNextTile(); // Start flipping
   }
 
-  // 🔹 Activate random auto mode
-  document.querySelector(".randombtn").addEventListener("click", () => {
-    useRandomTiles = true;
-    randomAutoMode = true;
-    selectedAutoTiles = [];
-    resetGame();
-    showToast("Random mode activated. Click BET to start Auto Game.");
-  });
-
   // 🔹 Manual tile selection for auto game
-
   autoGameBtn.addEventListener("click", () => {
     if (!autoGameActive) {
       // 🔹 Activate Auto Game mode
@@ -521,6 +636,36 @@ window.onload = function () {
     }
     playSoundEffect("sound/buttonclick.wav");
   });
+  function revealAllTiles(clickedMineIndex) {
+    // Reveal all tiles
+    for (let i = 0; i < tiles.length; i++) {
+      const tile = tiles[i];
+
+      if (tile.classList.contains("flipping")) continue; // already revealed
+      tile.classList.add("flipping");
+
+      tile.innerHTML =
+        '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+
+      if (i === clickedMineIndex) {
+        // ✅ Clicked mine → Fire
+        tile.style.backgroundImage = "url('mineimg/Fire.webp')";
+        tile.style.backgroundColor = "#fa7273";
+      } else if (mineIndexes.includes(i)) {
+        // ✅ Other mines → Bomb
+        tile.style.backgroundImage = "url('mineimg/Bomb.webp')";
+        tile.style.backgroundColor = "#fa7273";
+      } else {
+        // ✅ Safe tiles → Star
+        tile.style.backgroundImage = "url('mineimg/Star.webp')";
+        tile.style.backgroundColor = "#f8b419";
+      }
+
+      tile.style.backgroundSize = "contain";
+      tile.style.backgroundRepeat = "no-repeat";
+      tile.style.backgroundPosition = "center";
+    }
+  }
 
   // 🔹 Tile click handler (for selection in auto mode)
 
@@ -555,64 +700,98 @@ window.onload = function () {
     }, 1500);
   }
 
-  // 🔹 Main bet button logic (starts game or cash out)
-  betButton.addEventListener("click", () => {
-    const bet = parseInt(betInput.value);
-    if (!bet || bet < 10) {
-      showToast("Minimum bet is ₹10");
-      return;
-    }
-    if (bet > balance) {
-      showToast("Not enough balance 💸");
-      return;
-    }
+  // 🔹 Handles what happens when player hits a mine
+  function gameOver() {
+    gameStarted = false;
 
-    currentBet = bet;
-
-    // ...existing code...
-    if (!gameStarted && isAutoSelectingTiles && selectedAutoTiles.length > 0) {
-      isAutoSelectingTiles = false;
-      autoGameRunning = true; // <-- THIS LINE IS IMPORTANT
-      randomAutoMode = false;
-      useRandomTiles = false;
-
-      balance -= currentBet;
+    // Only show win amount if all safe tiles were opened (full win)
+    if (winAmount > 0 && safeClicks + totalMines === totalTiles) {
+      balance += winAmount;
       updateBalance();
-      gameStarted = true;
-      betButton.innerText = "CASH OUT";
+      winAmount = 0;
+    }
 
-      flipAutoTiles();
-      selectedAutoTiles.forEach((index) => {
-        tiles[index].style.outline = "2px solid yellow";
-      });
-      // ...existing code...
-    } else if (!gameStarted && randomAutoMode) {
-      autoGameRunning = true;
-      isAutoSelectingTiles = false;
-      useRandomTiles = false;
-      balance -= currentBet;
-      updateBalance();
-      gameStarted = true;
-      betButton.innerText = "CASH OUT";
+    // Show all mine tiles
+    tiles.forEach((tile, index) => {
+      if (mineIndexes.includes(index)) {
+        tile.classList.add("flipping");
+        tile.innerHTML =
+          '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
 
-      selectedAutoTiles = [];
-      while (selectedAutoTiles.length < 5) {
-        const randIndex = Math.floor(Math.random() * totalTiles);
-        if (!selectedAutoTiles.includes(randIndex)) {
-          selectedAutoTiles.push(randIndex);
-        }
+        // 🔥 Fire on clicked tile, 💣 Bomb on others
+        tile.style.backgroundImage =
+          index === clickedDangerIndex
+            ? "url('/mineimg/Fire.webp')"
+            : "url('/mineimg/Bomb.webp')";
+
+        tile.style.backgroundSize = "contain";
+        tile.style.backgroundRepeat = "no-repeat";
+        tile.style.backgroundPosition = "center";
+        tile.style.backgroundColor = "#ff4d4d";
       }
+      tile.onclick = null;
+    });
 
-      flipAutoTiles();
-    } else if (!gameStarted) {
-      balance -= currentBet;
+    gameOverMsg.innerText = "💥 GAME OVER 💥";
+    gameOverPopup.style.display = "flex";
+    cashButton.style.display = "none";
+    betButton.style.display = "inline-block";
+
+    // Hide popup after short delay
+    setTimeout(() => {
+      gameOverPopup.style.display = "none";
+    }, 1500);
+  }
+
+  function checkWinCondition() {
+    const totalSafeTiles = totalTiles - totalMines;
+    if (safeClicks >= totalSafeTiles) {
+      winMessage.innerText = `You cleared all safe tiles 🎉`;
+      winPopup.style.display = "flex";
+
+      balance += currentBet * realMultipliers[totalMines];
       updateBalance();
-      startManualGame();
-    } else {
-      autoGameRunning = false;
-      cashOut();
+
+      setTimeout(() => {
+        winPopup.style.display = "none";
+        if (autoGameRunning || randomAutoMode) {
+          proceedToNextAutoRound();
+        } else {
+          resetGame();
+        }
+      }, 2000);
     }
-  });
+  }
+
+  // toast popup//
+  function showToast(message) {
+    const toast = document.getElementById("toast-notification");
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 2500); // 2.5 seconds
+  }
+
+  // 🔹 Reset game to initial state
+  function resetGame() {
+    gameStarted = false;
+    mineIndexes = [];
+    safeClicks = 0;
+    winAmount = 0;
+    useRandomTiles = false;
+
+    tiles.forEach((tile) => {
+      tile.classList.remove("flipping");
+      tile.innerHTML = '<i class="fa fa-circle" aria-hidden="true"></i>';
+      tile.style.backgroundColor = "";
+      tile.style.backgroundImage = "url('')";
+
+      tile.style.outline = "";
+      tile.onclick = null;
+    });
+  }
 
   // 🔹 Handle bet amount increase/decrease
   betPlusBtn.addEventListener("click", () => {
@@ -657,66 +836,6 @@ window.onload = function () {
       howToPlayPopup.style.display = "none";
     }
   });
-  // 🔹 Start manual (click-based) game
-  function startManualGame() {
-    safeClicks = 0;
-    mineIndexes = [];
-    winAmount = 0;
-    gameOverPopup.style.display = "none";
-    winPopup.style.display = "none";
-    betButton.style.display = "none";
-    stopButton.style.display = "none";
-    cashButton.style.display = "block";
-    cashButton.disabled = true;
-    generateMines();
-
-    tiles.forEach((tile, index) => {
-      tile.classList.remove("flipped");
-      tile.innerHTML = '<i class="fa fa-circle" aria-hidden="true"></i>';
-      tile.style.backgroundColor = "";
-      tile.onclick = () => {
-        if (!gameStarted || tile.classList.contains("flipped")) return;
-        tile.classList.add("flipped");
-
-        if (mineIndexes.includes(index)) {
-          tile.innerHTML =
-            '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
-          tile.style.backgroundImage = "url('mineimg/Fire.webp')";
-          tile.style.backgroundSize = "contain";
-          tile.style.backgroundRepeat = "no-repeat";
-          tile.style.backgroundPosition = "center";
-          tile.style.backgroundColor = "#fa7273";
-          playSoundEffect("sound/bomb.777c9d64.mp3");
-
-          gameOver();
-
-          // ✅ Fix: Only reset manually played games
-          if (!autoGameRunning && !randomAutoMode) {
-            setTimeout(() => {
-              gameOverPopup.style.display = "none";
-              resetGame();
-              betButton.innerText = "BET";
-            }, 2000);
-          }
-        } else {
-          playSoundEffect("sound/diamond3.68da1013.mp3");
-          tile.innerHTML =
-            '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
-          tile.style.backgroundImage = "url('mineimg/Star.webp')";
-          tile.style.backgroundSize = "contain";
-          tile.style.backgroundRepeat = "no-repeat";
-          tile.style.backgroundPosition = "center";
-          tile.style.backgroundColor = "#f8b419";
-          safeClicks++;
-          updateLiveWin();
-          checkWinCondition();
-        }
-      };
-    });
-
-    gameStarted = true;
-    betButton.innerHTML = `CASH OUT <span class="live-win">(₹0)</span>`;
-  }
 
   // 🔹 Initial UI setup
   updateBalance();

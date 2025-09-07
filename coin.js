@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let totalMatchedFruits = 0;
 
   // 🎯 MANUAL WIN CHANCE (0–100)
-  let winChance = 100; // 100 = always force a win
+  let winChance = 30; // 100 = always force a win
   let forcedPattern = "random"; // "row" | "diagRight" | "diagLeft" | "random"
   let forcedRowIndex = 0; // 0 = top, 1 = middle, 2 = bottom (used for row wins)
   const betBtn = document.getElementById("betbtn");
