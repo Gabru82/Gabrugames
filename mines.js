@@ -130,6 +130,56 @@ window.onload = function () {
     }
   });
 
+  coinbtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent it from triggering window click
+    betbox.style.display = betbox.style.display === "block" ? "none" : "block";
+    playSoundEffect("sound/buttonclick.wav");
+  });
+
+  // 🔹 Close when clicking outside
+  window.addEventListener("click", (e) => {
+    if (!betbox.contains(e.target) && e.target !== coinbtn) {
+      betbox.style.display = "none";
+    }
+  });
+  const betButtons = document.querySelectorAll(".bet-btn");
+
+  betButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Set clicked value to input
+      betInput.value = btn.textContent;
+
+      // Remove active class from all buttons
+      betButtons.forEach((b) => b.classList.remove("active"));
+
+      // Add active class to clicked one
+      btn.classList.add("active");
+      playSoundEffect("sound/buttonclick.wav");
+    });
+  });
+
+  function disabledbtn() {
+    betInput.disabled = true;
+    betPlusBtn.disabled = true;
+    betMinusBtn.disabled = true;
+    mineBtn.disabled = true;
+  }
+  function Enabledbtn() {
+    betInput.disabled = false;
+    betPlusBtn.disabled = false;
+    betMinusBtn.disabled = false;
+    mineBtn.disabled = false;
+  }
+  function allenable() {
+    autoGameBtn.disabled = false;
+    randombtn.disabled = false;
+    betInput.disabled = false;
+    betPlusBtn.disabled = false;
+    betMinusBtn.disabled = false;
+    cashButton.disabled = false;
+    mineBtn.disabled = false;
+  }
+
   // 🔹 Update balance display
   // ...existing code...
   function updateBalance() {
@@ -160,16 +210,26 @@ window.onload = function () {
 
     // Only show win amount if all safe tiles were opened (full win)
     if (winAmount > 0 && safeClicks + totalMines === totalTiles) {
-      balance += winAmount;
-      updateBalance();
+      updateWallet(balance + winAmount);
       winAmount = 0;
     }
 
     // Show all mine tiles
     tiles.forEach((tile, index) => {
       if (mineIndexes.includes(index)) {
-        tile.classList.add("flipped");
-        tile.innerHTML = "💣";
+        tile.classList.add("flipping");
+        tile.innerHTML =
+          '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+
+        // 🔥 Fire on clicked tile, 💣 Bomb on others
+        tile.style.backgroundImage =
+          index === clickedDangerIndex
+            ? "url('mineimg/Fire.webp')"
+            : "url('/mineimg/Bomb.webp')";
+
+        tile.style.backgroundSize = "contain";
+        tile.style.backgroundRepeat = "no-repeat";
+        tile.style.backgroundPosition = "center";
         tile.style.backgroundColor = "#ff4d4d";
       }
       tile.onclick = null;
@@ -177,44 +237,12 @@ window.onload = function () {
 
     gameOverMsg.innerText = "💥 GAME OVER 💥";
     gameOverPopup.style.display = "flex";
-    betButton.textContent = "BET";
+    cashButton.style.display = "none";
+    betButton.style.display = "inline-block";
 
-    // 🔁 Auto continue if auto game is active
+    // Hide popup after short delay
     setTimeout(() => {
       gameOverPopup.style.display = "none";
-
-      if (autoGameRunning) {
-        proceedToNextAutoRound();
-        clearTimeout(autoTimeout); // prevent stacking timeouts
-
-        autoTimeout = setTimeout(() => {
-          resetGame();
-          currentBet = parseInt(betInput.value);
-
-          if (balance >= currentBet) {
-            balance -= currentBet;
-            updateBalance();
-
-            // Set button to show cash out and reset win amount display
-            betButton.textContent = `CASH OUT ₹0`;
-
-            if (randomAutoMode) {
-              selectedAutoTiles = [];
-              while (selectedAutoTiles.length < 5) {
-                const randIndex = Math.floor(Math.random() * tiles.length);
-                if (!selectedAutoTiles.includes(randIndex)) {
-                  selectedAutoTiles.push(randIndex);
-                }
-              }
-            }
-
-            flipAutoTiles();
-          } else {
-            autoGameRunning = false;
-            showToast("Not enough balance to continue auto play.");
-          }
-        }, 500); // Slight delay to restart game
-      }
     }, 1500);
   }
 
@@ -251,6 +279,9 @@ window.onload = function () {
 
   // 🔹 Reset game to initial state
   function resetGame() {
+    resetPeriodid();
+    isFirstClick = true; // flag to detect first click
+
     gameStarted = false;
     mineIndexes = [];
     safeClicks = 0;
@@ -258,9 +289,11 @@ window.onload = function () {
     useRandomTiles = false;
 
     tiles.forEach((tile) => {
-      tile.classList.remove("flipped");
+      tile.classList.remove("flipping");
       tile.innerHTML = '<i class="fa fa-circle" aria-hidden="true"></i>';
       tile.style.backgroundColor = "";
+      tile.style.backgroundImage = "url('')";
+
       tile.style.outline = "";
       tile.onclick = null;
     });
@@ -292,7 +325,20 @@ window.onload = function () {
       document.querySelector(".betbtnplay").innerText = "BET";
     }
   }
-
+  stopButton.addEventListener("click", () => {
+    // Signal to stop after the current round
+    autoGameRunning = false;
+    isAutoSelectingTiles = false;
+    autoGameBtn.style.backgroundColor = ""; // reset to default
+    autoGameActive = false;
+    randomAutoMode = false;
+    useRandomTiles = false;
+    randombtn.style.backgroundColor = ""; // reset to default
+    randomModeActive = false;
+    setTimeout(() => {
+      allenable();
+    }, 2000);
+  });
   // 🔹 Flip tiles in auto mode (one by one)
   function flipAutoTiles() {
     let i = 0;
@@ -393,34 +439,87 @@ window.onload = function () {
   });
 
   // 🔹 Manual tile selection for auto game
-  // ...existing code...
 
-  // 🔹 Manual tile selection for auto game
   autoGameBtn.addEventListener("click", () => {
-    // Reset all states
-    selectedAutoTiles = [];
-    isAutoSelectingTiles = true;
-    autoGameRunning = false;
-    randomAutoMode = false;
-    useRandomTiles = false;
-    resetGame();
+    if (!autoGameActive) {
+      // 🔹 Activate Auto Game mode
+      selectedAutoTiles = [];
+      isAutoSelectingTiles = true;
+      autoGameRunning = false;
+      randomAutoMode = false;
+      useRandomTiles = false;
+      autoGameBtn.style.backgroundColor = "green";
+      betButton.style.display = "none";
+      startButton.disabled = true;
+      startButton.style.display = "block";
+      resetGame();
+      showToast("Auto Game activated. Select tiles, then click BET.");
 
-    showToast("Select tiles for Auto Game. Then click BET.");
-
-    // Enable tile selection only in auto mode
-    tiles.forEach((tile, index) => {
-      tile.onclick = () => {
-        if (isAutoSelectingTiles && !autoGameRunning) {
-          if (!selectedAutoTiles.includes(index)) {
-            selectedAutoTiles.push(index);
-            tile.style.outline = "2px solid yellow";
-          } else {
-            selectedAutoTiles = selectedAutoTiles.filter((i) => i !== index);
-            tile.style.outline = "";
+      // Enable tile selection only in auto mode
+      tiles.forEach((tile, index) => {
+        tile.onclick = () => {
+          if (isAutoSelectingTiles && !autoGameRunning) {
+            if (!selectedAutoTiles.includes(index)) {
+              selectedAutoTiles.push(index);
+              tile.style.outline = "2px solid yellow";
+              startButton.disabled = false;
+            } else {
+              selectedAutoTiles = selectedAutoTiles.filter((i) => i !== index);
+              tile.style.outline = "";
+            }
           }
-        }
-      };
-    });
+        };
+      });
+
+      autoGameActive = true;
+      randombtn.disabled = true;
+      disabledbtn();
+    } else {
+      // 🔹 Deactivate Auto Game mode
+      isAutoSelectingTiles = false;
+      autoGameRunning = false;
+      betButton.disabled = false;
+      autoGameBtn.style.backgroundColor = ""; // reset to default
+      autoGameActive = false;
+      randombtn.disabled = false;
+      betButton.style.display = "block";
+      startButton.style.display = "none";
+      Enabledbtn();
+      tiles.forEach((tile) => (tile.style.outline = "")); // clear highlights
+      resetGame();
+      showToast("Auto Game deactivated.");
+    }
+    playSoundEffect("sound/buttonclick.wav");
+  });
+  // 🔹 Activate random auto mode
+  randombtn.addEventListener("click", () => {
+    if (!randomModeActive) {
+      // 🔹 Activate
+      useRandomTiles = true;
+      randomAutoMode = true;
+      selectedAutoTiles = [];
+      randombtn.style.backgroundColor = "green";
+      betButton.style.display = "none";
+      startButton.style.display = "block";
+      resetGame();
+      showToast("Random mode activated. Click BET to start Auto Game.");
+      randomModeActive = true;
+      autoGameBtn.disabled = true;
+      disabledbtn();
+    } else {
+      // 🔹 Deactivate
+      useRandomTiles = false;
+      randomAutoMode = false;
+      betButton.style.display = "block";
+      startButton.style.display = "none";
+      randombtn.style.backgroundColor = ""; // reset to default
+      resetGame();
+      showToast("Random mode deactivated.");
+      randomModeActive = false;
+      autoGameBtn.disabled = false;
+      Enabledbtn();
+    }
+    playSoundEffect("sound/buttonclick.wav");
   });
 
   // 🔹 Tile click handler (for selection in auto mode)
@@ -548,6 +647,9 @@ window.onload = function () {
   closeHowToPlay.addEventListener("click", () => {
     howToPlayPopup.style.display = "none";
   });
+  howplay.addEventListener("click", () => {
+    howToPlayPopup.style.display = "flex";
+  });
 
   // Optional: close on outside click
   window.addEventListener("click", (e) => {
@@ -562,6 +664,10 @@ window.onload = function () {
     winAmount = 0;
     gameOverPopup.style.display = "none";
     winPopup.style.display = "none";
+    betButton.style.display = "none";
+    stopButton.style.display = "none";
+    cashButton.style.display = "block";
+    cashButton.disabled = true;
     generateMines();
 
     tiles.forEach((tile, index) => {
@@ -573,8 +679,15 @@ window.onload = function () {
         tile.classList.add("flipped");
 
         if (mineIndexes.includes(index)) {
-          tile.innerHTML = "💣";
-          tile.style.backgroundColor = "#ff4d4d";
+          tile.innerHTML =
+            '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+          tile.style.backgroundImage = "url('mineimg/Fire.webp')";
+          tile.style.backgroundSize = "contain";
+          tile.style.backgroundRepeat = "no-repeat";
+          tile.style.backgroundPosition = "center";
+          tile.style.backgroundColor = "#fa7273";
+          playSoundEffect("sound/bomb.777c9d64.mp3");
+
           gameOver();
 
           // ✅ Fix: Only reset manually played games
@@ -586,8 +699,14 @@ window.onload = function () {
             }, 2000);
           }
         } else {
-          tile.innerHTML = "⭐";
-          tile.style.backgroundColor = "#00cc99";
+          playSoundEffect("sound/diamond3.68da1013.mp3");
+          tile.innerHTML =
+            '<i class="fa fa-circle" aria-hidden="true" style="visibility:hidden;"></i>';
+          tile.style.backgroundImage = "url('mineimg/Star.webp')";
+          tile.style.backgroundSize = "contain";
+          tile.style.backgroundRepeat = "no-repeat";
+          tile.style.backgroundPosition = "center";
+          tile.style.backgroundColor = "#f8b419";
           safeClicks++;
           updateLiveWin();
           checkWinCondition();

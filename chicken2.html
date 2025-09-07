@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/chicken2img/Coin.webp" type="image/x-icon" />
+  <title>Chicken Road Game</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="chicken2.css" />
+</head>
+
+
+
+
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <img src="/chicken2img/brave-screenshot-parimatchglobalcom-removebg-preview-689d79783d982.webp" alt=""
+      width="300vw">
+    <div class="loader"></div>
+  </div>
+
+  <div id="toast-notification" style="
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 9999;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+"></div>
+
+
+
+
+  <div id="menuPopup" class="menu-popup" style="display: none;">
+    <div class="menu-header">
+      <!-- <img src="https://via.placeholder.com/40" class="avatar" alt="Avatar"> -->
+      <div class="user-info">
+        <strong>Salmon Pro...</strong>
+        <span class="change-avatar">Change avatar</span>
+      </div>
+    </div>
+
+    <ul class="menu-content">
+      <li>
+        <i class="fa fa-volume-up"> Sound</i>
+        <label class="switch">
+          <input type="checkbox" id="soundToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </li>
+      <li>
+        <i class="fa fa-music"> Music</i>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </li>
+      <li>
+        <i class="fa fa-keyboard-o"> «Space» to spin & go</i>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </li>
+      <hr>
+      <li><i class="fa fa-shield"> Provably fair settings</i></li>
+      <li id="howbtn2"><i class="fa fa-book"> Game rules</i></li>
+      <li><i class="fa fa-clock-o">My bet history</i> </li>
+      <hr>
+      <li>
+        <a href="/home.html" class="backhome"><i class="fa fa-home"> Back to home</i></a></li>
+    </ul>
+
+    <div class="menu-footer">
+      <!-- Powered by <img src="https://via.placeholder.com/50x20" alt="Logo"> -->
+    </div>
+  </div>
+
+  <section class="gamecontainer">
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="navbar">
+        <div class="logodiv">
+          <img src="/chicken2img/logo-689d739f2f5fd.webp" alt="chicken logo" class="logo" />
+        </div>
+        <div class="btn">
+          <button class="btn1 howbtn" id="howbtn">
+            <i class="fa fa-info-circle infoicon"></i>how to play ?
+          </button>
+          <button class="btn1 " id="walletBtn">5000</button>
+          <button class="btn11" id="menubtn"><i class="fa fa-bars"></i></button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+
+
+
+  <!-- GAME SECTION -->
+
+
+  <section class="chickensection">
+    <div class="cock" id="gameArea">
+      <img src="/chicken2img/C_I_A New.gif" class="gate show" id="chicken" />
+      <img id="animation" src="/frame/frame1.png" alt="Animation" width="200" class="move" />
+
+      <!-- <img src="/chickenimg/ChickenWalkAnimation-ezgif.com-cut.gif" class="move" id="chickenmove" /> -->
+      <img src="" class="dead" id="deadchicken" style="display: none;" />
+
+      <div class="chickenhome">
+        <img src="chicken2img/Bg.webp" alt="" width="100%" height="100%">
+        <img src="chicken2img/street-lamp-689d715a69d34.webp" alt="" width="60%" height="40%" class="streetlamp">
+      </div>
+      <div class="car" id="car1"><img src="/chicken2img/Car1.webp" alt="" width="130px" height="190px"></div>
+      <div class="car" id="car2"><img src="/chicken2img/Car2.webp" alt="" width="130px" height="190px"></div>
+      <div class="car" id="car3"><img src="/chicken2img/Car3.webp" alt="" width="130px" height="190px"></div>
+      <div class="car" id="car4"><img src="/chicken2img/Car4.webp" alt="" width="130px" height="190px"></div>
+      <div class="car" id="car5"><img src="/chicken2img/Car5.webp" alt="" width="130px" height="190px"></div>
+      <div class="car" id="car6"><img src="/chicken2img/Car6.webp" alt="" width="130px" height="190px"></div>
+
+
+
+      <div class="barrier" id="Barrier">
+
+      </div>
+
+
+      <!-- 20 div blocks -->
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+
+        <button class="profitshow" id="one"> </button>
+      </div>
+      <div class="chickenhome1" id="chimgbox"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="two"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="three"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="four"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="five"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="six"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="seven"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="eight"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="nine"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="ten"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="eleven"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="twelve"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="thirteen"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="fourteen"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="fifteen"> </button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="sixteen"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="seventeen"></button>
+      </div>
+      <div class="chickenhome1"><img src="/chicken2img/Road.webp" alt="" width="100%" height="100%" />
+        <p class="spanp" id="spanp"></p>
+        <button class="profitshow" id="eighteen"></button>
+      </div>
+      <div class="chickenhome1 winfinal " id="winbox">
+        <img src="/chicken2img/Screenshot 2025-08-05 171032.webp" alt="" width="100%" height="100%" />
+        <img src="/chicken2img/winlampp-689d715859ef9.webp" alt="" class="winlamp">
+
+
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footbox">
+      <div class="footbox1">
+        <div class="bet">
+          <div class="btn333">
+            <button class="min" id="Min">min</button>
+            <input class="betinput" type="number" min="0" max="5000" id="betInput" />
+            <button class="max" id="Max">max</button>
+          </div>
+
+          <div class="btnbox2">
+            <button class="numb" data-value="10"><i class="fa fa-inr"></i>10</button>
+            <button class="numb" data-value="20"><i class="fa fa-inr"></i>20</button>
+            <button class="numb" data-value="30"><i class="fa fa-inr"></i>30</button>
+            <button class="numb" data-value="40"><i class="fa fa-inr"></i>40</button>
+          </div>
+        </div>
+
+        <div class="text1">
+          <div class="text2">
+            <h2>Difficulty</h2>
+            <p>Change Of Collision</p>
+          </div>
+          <div class="changeingmode">
+            <button class="chnmod mode" id="easybtn">Easy</button>
+            <button class="chnmod" id="mediumbtn">Medium</button>
+            <button class="chnmod" id="hardbtn">Hard</button>
+            <button class="chnmod" id="hardcorebtn">Hardcore</button>
+
+            <!-- Dropdown version (hidden by default) -->
+            <select class="mode-dropdown" id="modeDropdown">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+              <option value="hardcore">Hardcore</option>
+            </select>
+
+          </div>
+        </div>
+
+
+        <div class="btnplaybox">
+
+          <button class="btnplay" id="playBtn">GO</button>
+          <!-- <button class="btnplay" id="goNextBtn" style="display:none;">GO</button> -->
+          <button class="cashoutbtn" id="cashoutBtn">CASHOUT</button>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+  </section>
+
+
+  <div id="rulesPopup" class="rules-popup" style="display: none;">
+    <div class="rules-content">
+      <h3>How to Play</h3>
+      <ul>
+        <li>Select a difficulty mode.</li>
+        <li>Enter your bet amount.</li>
+        <li>Click "Play" to start the game.</li>
+        <li>Every safe road block you win some money </li>
+        <li>Cross the road for more win </li>
+        <li>Click "Cash Out" to secure your winnings.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div id="cashOutPopup" class="popup-overlay">
+    <div class="popup-content">
+      <h2>Cash Out Successful!</h2>
+      <p>Your winnings: ₹<span id="winAmount">0</span></p>
+    </div>
+  </div>
+  <!-- Game Over Popup -->
+  <div id="gameOverPopup" style="
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border: 4px solid red;
+  text-align: center;
+  z-index: 1000;
+">
+    <h2>🚨 Game Over!</h2>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="/chicken2.js"></script>
+
+</body>
+
+</html>
