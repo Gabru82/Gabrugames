@@ -856,6 +856,35 @@ fullscreenBtn.addEventListener("click", async () => {
     console.log("Fullscreen error:", err);
   }
 });
+const gameContainer = document.getElementById("game-container");
+
+function isiOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+fullscreenBtn.addEventListener("click", async () => {
+  if (isiOS()) {
+    // Apply CSS fullscreen fallback for iPhone
+    gameContainer.classList.add("fullscreen-ios");
+    // Optional: rotate orientation hint if needed
+    document.body.style.transform = "rotate(90deg)";
+    document.body.style.transformOrigin = "left top";
+    document.body.style.width = "100vh";
+    document.body.style.height = "100vw";
+    document.body.style.overflow = "hidden";
+  } else {
+    // Normal fullscreen for other devices
+    if (document.body.requestFullscreen) {
+      await document.body.requestFullscreen();
+    } else if (document.body.webkitRequestFullscreen) {
+      await document.body.webkitRequestFullscreen();
+    }
+    if (screen.orientation && screen.orientation.lock) {
+      await screen.orientation.lock("landscape").catch(() => {});
+    }
+  }
+});
+
   function checkOrientation() {
     if (window.innerHeight > window.innerWidth) {
       // Portrait → show warning

@@ -115,6 +115,18 @@
     z-index: 9999;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
+  /* iOS fullscreen fallback */
+.fullscreen-ios {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important; /* cover everything */
+  background: #000; /* optional, matches game background */
+  overflow: hidden;
+}
+
 </style>
 
 <body>
