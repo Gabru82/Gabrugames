@@ -100,6 +100,21 @@
     justify-content: center;
     flex-direction: column;
   }
+   #fullscreen-btn {
+    position: fixed;
+    bottom: 1vh;
+    left: 1vw;
+    padding: 1vh 0.5vw;
+    font-size: 0.8vw;
+    font-weight: bold;
+    background: rgb(255, 255, 255);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
 </style>
 
 <body>
@@ -107,6 +122,7 @@
 <div id="rotate-warning">
   🔄 Please rotate your device<br>to <span style="color:#0f0">landscape mode</span> to play the game
 </div>
+<button id="fullscreen-btn">⛶ Fullscreen</button>
   <!-- 🔄 Loading Screen -->
   <div id="loadingScreen" style="display:none;">
     <div>

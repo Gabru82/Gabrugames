@@ -834,6 +834,28 @@ function resetSelections() {
   const betCountEl = document.querySelector(".betcount");
   if (betCountEl) betCountEl.textContent = "0";
 }
+
+const fullscreenBtn = document.getElementById("fullscreen-btn");
+
+fullscreenBtn.addEventListener("click", async () => {
+  try {
+    // Request fullscreen
+    if (document.body.requestFullscreen) {
+      await document.body.requestFullscreen();
+    } else if (document.body.webkitRequestFullscreen) {
+      await document.body.webkitRequestFullscreen();
+    } else if (document.body.msRequestFullscreen) {
+      await document.body.msRequestFullscreen();
+    }
+
+    // Try to lock orientation to landscape
+    if (screen.orientation && screen.orientation.lock) {
+      await screen.orientation.lock("landscape").catch(() => {});
+    }
+  } catch (err) {
+    console.log("Fullscreen error:", err);
+  }
+});
   function checkOrientation() {
     if (window.innerHeight > window.innerWidth) {
       // Portrait → show warning
