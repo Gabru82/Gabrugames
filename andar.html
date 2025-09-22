@@ -79,9 +79,24 @@
     background: #e0ffe0;
     color: #008800;
   }
+    #rotate-warning {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
 </style>
 
 <body>
+  <div id="rotate-warning">Please rotate your device to landscape mode</div>
+
   <!-- 🔄 Loading Screen -->
   <div id="loadingScreen" style="display:none;">
     <div>
