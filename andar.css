@@ -1,0 +1,561 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mainbox {
+  background: url("/anderbaharimg/Bg.png") no-repeat center center;
+  background-size: 100% 100%;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+.topsection {
+  display: flex;
+  justify-content: space-around;
+}
+.scorebox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.score {
+  background: url("/anderbaharimg/Frame.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 25vw;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5vw;
+}
+.logo {
+  background: url("/anderbaharimg/Fun\ AB.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 20vw;
+  height: 10vh;
+}
+.winner {
+  background: url("/anderbaharimg/Frame.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 25vw;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5vw;
+}
+.cardhukum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2vh;
+  object-fit: cover;
+}
+.card-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.coinImage {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.topcards {
+  width: 80%;
+  position: relative;
+
+  transition: transform 0.3s ease-in-out;
+}
+
+.topcards:hover {
+  transform: scale(1.1);
+}
+.card-wrapper.active {
+  filter: drop-shadow(1px 1px 10px limegreen);
+}
+
+.select {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.allcards {
+  background: url("/anderbaharimg/Framecards.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 30vw;
+  height: 11vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.iconbtn {
+  background-color: transparent;
+  border: none;
+  width: 10vw;
+  margin-top: 2vh;
+  position: relative;
+  img {
+    cursor: pointer;
+
+    width: 3vw;
+    height: 5vh;
+    filter: drop-shadow(1px 1px 5px rgb(65, 158, 212));
+  }
+}
+.iconbtn:hover {
+  transform: scale(1.02);
+}
+
+.colorcards {
+  background: url("/anderbaharimg/Framecolor.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 30vw;
+  height: 10vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.colcard {
+  background-color: transparent;
+  border: none;
+  width: 10vw;
+  position: relative;
+
+  img {
+    cursor: pointer;
+    filter: drop-shadow(1px 1px 50px rgb(65, 158, 212));
+    width: 3vw;
+    height: 5vh;
+  }
+}
+.colcard:hover {
+  transform: scale(1.02);
+}
+.cardsnumber {
+  background: url("/anderbaharimg/Framenum.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 30vw;
+  height: 11vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.at6 {
+  background-color: transparent;
+  border: none;
+  width: 100vw;
+  color: rgba(255, 255, 255, 0.83);
+  font-weight: 900;
+  font-size: 1.5vw;
+  font-family: Arial, Helvetica, sans-serif;
+  filter: drop-shadow(1px 1px 10px rgb(65, 158, 212));
+}
+.at6:hover {
+  transform: scale(1.02);
+}
+#cardsnumber button {
+  position: relative;
+  margin: 5px;
+}
+#cardsnumber button.active {
+  color: limegreen;
+}
+.colcard.active {
+  filter: drop-shadow(1px 1px 10px limegreen);
+}
+.iconbtn.active {
+  filter: drop-shadow(1px 1px 5px limegreen);
+}
+
+.andarbahar {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1vh;
+}
+.andar {
+  background: url("/anderbaharimg/Frameandar.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 10vw;
+  height: 20vh;
+  display: flex;
+  overflow: hidden;
+  /* overflow-y: auto; */
+  flex-direction: column;
+  justify-content: center;
+  img {
+    width: 7vw;
+    margin: auto;
+  }
+}
+
+.andarbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#andarBtn,
+#baharBtn {
+  position: relative;
+  cursor: pointer;
+}
+.clickandar {
+  margin-top: 2vh;
+  border: 2px solid rgb(65, 158, 212);
+  padding: 1vh;
+  border-radius: 50%;
+  width: 5vw;
+  height: 10vh;
+  background: transparent;
+  color: white;
+
+  font-size: 1vw;
+}
+.clickandar.active {
+  border: 2px solid limegreen;
+}
+
+.time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .bgandar {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+} */
+.cardshow {
+  background: url("/anderbaharimg/Frame2.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 10vw;
+  height: 20vh;
+  display: flex;
+  overflow: hidden;
+  /* overflow-y: auto; */
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+#cardshow-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: scrollCards 5s linear infinite;
+  img {
+    margin: auto;
+    width: 7vw;
+  }
+}
+#cardshow-inner {
+  position: relative;
+  height: 200px; /* visible window */
+  overflow: hidden;
+}
+
+.scroll-track {
+  display: flex;
+  flex-direction: column;
+  animation: scrollUpLoop 3s linear infinite;
+}
+
+.scroll-card {
+  width: 80px; /* adjust as needed */
+  height: auto;
+}
+
+@keyframes scrollUpLoop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.scroll-up-settle {
+  position: relative;
+  transform: translateY(100%);
+  animation: scrollUpSettle 1s forwards ease-out; /* total duration */
+  opacity: 0;
+}
+.scroll-up-exit {
+  animation: scrollUpExit 2s ease forwards;
+}
+
+@keyframes scrollUpExit {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150%);
+    opacity: 0;
+  }
+}
+@keyframes scrollUpSettle {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  85% {
+    transform: translateY(-10%); /* slight overshoot */
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0%); /* settle */
+    opacity: 1;
+  }
+}
+
+/* #cardshow {
+  overflow: hidden;
+  height: 150px;
+  position: relative;
+}
+
+
+@keyframes scrollCards {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+} */
+
+.card-img {
+  width: 80%;
+  height: 19vh;
+}
+
+.bahar {
+  background: url("/anderbaharimg/Frameandar.png") no-repeat center center;
+  background-size: 100% 100%;
+  width: 10vw;
+  height: 20vh;
+  display: flex;
+  overflow: hidden;
+  /* overflow-y: auto; */
+  flex-direction: column;
+  justify-content: center;
+  img {
+    width: 7vw;
+    margin: auto;
+  }
+}
+/* .coins{
+    width: 25vw;
+}
+.coin10{
+    background: none;
+    border: none;
+    cursor: pointer;
+    img{
+        width: 5vw;
+        height: 10vh;
+    }
+ 
+} */
+
+/* Base style for all coins */
+.coin {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.coin:hover {
+  filter: drop-shadow(1px 1px 5px rgb(78, 66, 235));
+}
+
+.coin img {
+  width: 5.5vw;
+  height: auto;
+}
+.coin.active {
+  filter: drop-shadow(1px 1px 5px rgb(242, 81, 0));
+
+  transform: scale(1.1);
+}
+
+.coin-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Individual positioning for curved layout */
+.coin10 {
+  left: 1%;
+  bottom: 25%;
+}
+
+.coin25 {
+  left: 5.8%;
+  bottom: 20%;
+}
+
+.coin50 {
+  left: 11%;
+  bottom: 16%;
+}
+
+.coin100 {
+  left: 16%;
+  bottom: 12%;
+}
+.changeimg {
+  position: absolute;
+  bottom: 2vw;
+  left: 43vw;
+
+  img {
+    width: 5vw;
+    height: 10vh;
+  }
+}
+.coin1 {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Individual positioning for curved layout */
+.coin500 {
+  right: 1%;
+  bottom: 24%;
+}
+
+.coin1000 {
+  right: 5.8%;
+  bottom: 19%;
+}
+
+.coin5000 {
+  right: 10.8%;
+  bottom: 14.6%;
+}
+
+.coin10000 {
+  right: 16%;
+  bottom: 11.4%;
+}
+.footer {
+  position: absolute;
+  bottom: 0vh;
+  display: flex;
+  justify-content: space-around;
+  width: 100vw;
+  img {
+    width: 10vw;
+    height: 5vh;
+  }
+}
+@media (max-height: 600px) {
+  .coin img {
+    width: 4.5vw;
+    height: auto;
+  }
+  .changeimg {
+    position: absolute;
+    bottom: 1.5vw;
+    left: 43vw;
+  }
+  .clickandar {
+    margin-top: 0.5vh;
+    border: 2px solid rgb(65, 158, 212);
+    padding: 1vh;
+    border-radius: 50%;
+    width: 5vw;
+    height: 7vh;
+    background: transparent;
+    color: white;
+    font-size: 1vw;
+  }
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+/* Win popup styling */
+.win-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.5
+  ); /* semi-transparent for glass effect */
+  color: #fff;
+  padding: 3vh 3vw;
+  border-radius: 10px;
+  font-size: 1.3vw;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px); /* frosted glass blur */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 1000;
+  width: 15vw;
+  max-height: 50vh; /* prevent too tall */
+  overflow-y: auto; /* scroll if too many wins */
+}
+
+.win-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.win-popup.hide {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-30px);
+}
+.totalbet{
+  position: absolute;
+  bottom: 1vh;
+  right: 1vw;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  p{
+    font-size: 3vh;
+    border: 1px solid white;
+    display: flex;
+    justify-content: end;
+    padding: 0 2vh;
+    width: 6vw;
+    border-radius: 2vw;
+  }
+}

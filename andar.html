@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="/anderbaharimg/Poker Cards.png" type="image/x-icon">
+  <title>Andar Bahar</title>
+  <link rel="stylesheet" href="andar.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+</head>
+<style>
+  #loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.941);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+.closebtn{
+  position: absolute;
+  right: 2vw;
+  top: 2vh;
+  font-size: 1.5vw;
+  border: 1px solid rgba(255, 255, 255, 0.329);
+  color: rgba(255, 255, 255, 0.402);
+  border-radius: 50%;
+  padding: 0.5vh ;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+  .message {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    position: absolute;
+    top: 15%;
+    z-index: 999;
+
+  }
+
+  .message.info {
+    background: #e0f0ff;
+    color: #005bbb;
+  }
+
+  .message.error {
+    background: #ffe0e0;
+    color: #bb0000;
+  }
+
+  .message.success {
+    background: #e0ffe0;
+    color: #008800;
+  }
+</style>
+
+<body>
+  <!-- 🔄 Loading Screen -->
+  <div id="loadingScreen" style="display:none;">
+    <div>
+      <p class="load">Please wait for next round…</p>
+      <p id="loadingCountdown"></p>
+    </div>
+  </div>
+  <div id="betMessage" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 4vh 4vw;
+  border: 2px solid red;
+  border-radius: 8px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  font-size: 1vw;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+">
+    ⚠️ Please select any options before placing a bet.
+  </div>
+  <div id="betSuccessMessage" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.788);
+  padding: 4vh 4vw;
+  border: 2px solid green;
+  border-radius: 8px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  font-size: 1.5vw;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+">
+    ✅ Bet placed successfully!
+  </div>
+  <!-- <div id="message" class="message"></div> -->
+  <div id="winPopup" class="win-popup"></div>
+
+  <section class="mainbox" id="mainbox">
+    <div class="bgimage" id="bgimage">
+      <!-- logo score winner -->
+      <span class="closebtn">
+        <i class="fa fa-times" aria-hidden="true"></i>
+
+      </span>
+      <div class="topsection" id="topsection">
+        <div class="scorebox" id="scorebox-left">
+          <img src="/anderbaharimg/sCORE.png" alt="" width="20%" />
+          <div class="score" id="wallet"></div>
+
+        </div>
+        <div class="logo" id="logo"></div>
+        <div class="scorebox" id="scorebox-right">
+          <img src="/anderbaharimg/wINNER.png" alt="" width="20%" />
+          <div class="winner" id="winner">00</div>
+        </div>
+      </div>
+
+      <!-- Hukum card front -->
+      <div class="cardhukum" id="cardhukum">
+        <div class="card-wrapper" id="cardA" data-symbol="h1">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_A.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card2" data-symbol="h2">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_2.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card3" data-symbol="h3">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_3.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card4" data-symbol="h4">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_4.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card5" data-symbol="h5">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_5.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card6" data-symbol="h6">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_6.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card7" data-symbol="h7">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_7.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card8" data-symbol="h8">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_8.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card9" data-symbol="h9">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_9.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="card10" data-symbol="h10">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_10.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="cardJ" data-symbol="h11">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_J.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="cardQ" data-symbol="h12">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_Q.png" alt="" />
+        </div>
+        <div class="card-wrapper" id="cardK" data-symbol="h13">
+          <img class="topcards" src="/anderbaharimg/Poker Cards_K.png" alt="" />
+        </div>
+      </div>
+
+      <!-- Selection buttons -->
+      <div class="select" id="select">
+        <div class="allcards" id="allcards">
+          <button class="iconbtn" id="icon1" data-symbol="p"><img src="/anderbaharimg/Icon.png" alt=""></button>
+          <button class="iconbtn" id="icon2" data-symbol="e"><img src="/anderbaharimg/Icon2.png" alt=""></button>
+          <button class="iconbtn" id="icon3" data-symbol="h"><img src="/anderbaharimg/Icon3.png" alt=""></button>
+          <button class="iconbtn" id="icon4" data-symbol="c"><img src="/anderbaharimg/Icon4.png" alt=""></button>
+        </div>
+        <div class="colorcards" id="colorcards">
+          <button class="colcard" id="colcard1"><img src="/anderbaharimg/Poker Crads2.png" alt=""></button>
+          <button class="colcard" id="colcard2"><img src="/anderbaharimg/Poker Cards.png" alt=""></button>
+        </div>
+        <div class="cardsnumber" id="cardsnumber">
+          <button class="at6" id="rangeAto6">A To 6</button>
+          <button class="at6" id="range7">7</button>
+          <button class="at6" id="range8toK">8 To K</button>
+        </div>
+      </div>
+
+      <!-- Andar Bahar Section -->
+      <div class="andarbahar" id="andarbahar">
+        <div class="andarbox" id="andarbox-left">
+          <div class="andar" id="andar">
+          </div>
+          <button class="clickandar" id="andarBtn">Andar</button>
+        </div>
+        <div class="andarbox" id="andarbox-middle">
+          <div class="cardshow" id="cardshow">
+            <div id="cardshow-inner">
+            </div>
+          </div>
+          <h4 class="clickandar time" id="timer">00:00</h4>
+        </div>
+        <div class="andarbox" id="andarbox-right">
+          <div class="bahar" id="bahar"></div>
+          <button class="clickandar" id="baharBtn">Bahar</button>
+        </div>
+      </div>
+
+      <!-- Coins -->
+      <button class="coin coin10" id="coin10"><img src="/anderbaharimg/10.png" alt=""></button>
+      <button class="coin coin25" id="coin25"><img src="/anderbaharimg/25.png" alt=""></button>
+      <button class="coin coin50" id="coin50"><img src="/anderbaharimg/50.png" alt=""></button>
+      <button class="coin coin100" id="coin100"><img src="/anderbaharimg/100.png" alt=""></button>
+
+      <div class="changeimg" id="history">
+        <img src="/anderbaharimg/5.png" alt="" id="img5">
+        <img src="/anderbaharimg/7.png" alt="" id="img7">
+        <img src="/anderbaharimg/9.png" alt="" id="img9">
+      </div>
+
+      <button class="coin coin500" id="coin500"><img src="/anderbaharimg/10000.png" alt=""></button>
+      <button class="coin coin1000" id="coin1000"><img src="/anderbaharimg/5000.png" alt=""></button>
+      <button class="coin coin5000" id="coin5000"><img src="/anderbaharimg/1000.png" alt=""></button>
+      <button class="coin coin10000" id="coin10000"><img src="/anderbaharimg/500.png" alt=""></button>
+
+    </div>
+
+    <div class="footer" id="footer">
+      <button id="takeBtn" style="background-color: transparent; border: none;"><img src="/anderbaharimg/Take.png" alt=""
+          style="cursor: pointer;"></button>
+      <button id="betOkBtn" style="background-color: transparent; border: none;"><img src="/anderbaharimg/Bet Ok.png" alt=""
+          style="cursor: pointer;"></button>
+    </div>
+
+    <span class="totalbet"><h4>Total Bet</h4>
+      <p class="betcount">0</p>
+    </span>
+  </section>
+
+
+  <script src="andar.js"></script>
+
+
+
+</body>
+
+</html>
