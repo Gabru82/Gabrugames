@@ -1,19 +1,5 @@
 /* Win conditions */
 
-function checkOrientation() {
-    if (window.innerHeight > window.innerWidth) {
-      // Portrait
-      document.getElementById("rotate-warning").style.display = "flex";
-      document.body.style.display = "none";
-    } else {
-      // Landscape
-      document.getElementById("rotate-warning").style.display = "none";
-      document.body.style.display = "block";
-    }
-  }
-
-  window.addEventListener("resize", checkOrientation);
-  window.addEventListener("load", checkOrientation);
 const suits = ["p", "e", "h", "c"]; // your suit codes
 const colors = { p: "r", e: "r", h: "b", c: "b" };
 const numberRanges = {
@@ -848,3 +834,15 @@ function resetSelections() {
   const betCountEl = document.querySelector(".betcount");
   if (betCountEl) betCountEl.textContent = "0";
 }
+  function checkOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+      // Portrait → show warning
+      document.getElementById("rotate-warning").style.display = "flex";
+    } else {
+      // Landscape → hide warning
+      document.getElementById("rotate-warning").style.display = "none";
+    }
+  }
+
+  window.addEventListener("resize", checkOrientation);
+  window.addEventListener("load", checkOrientation);
